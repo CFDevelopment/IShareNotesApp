@@ -277,7 +277,7 @@ p {
 /*Search BARRRRR*/
 
 #searchContainer {
-    margin-top: 2.5%;
+    margin-top: 5%;
 }
 
 
@@ -479,4 +479,14 @@ img {
 #buttonRow {
     width: inherit;
     margin: inherit;
+}
+
+/*
+    
+    SIGN UP FORM 
+
+*/
+
+#signUpForm {
+    margin-top: 10%;
 }

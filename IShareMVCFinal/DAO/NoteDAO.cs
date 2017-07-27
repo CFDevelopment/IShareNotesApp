@@ -14,7 +14,7 @@ namespace IShareMVCFinal.DAO
             /*Hardcoded user to 1 for testing sake*/
             var db = MyDB.GetInstance();
             var sql =
-                string.Format("INSERT INTO Notes VALUES ('{0}','{1}','{2}','{3}','{4}' )", note.Title, note.Description, 1, DateTime.Now, note.Content);
+                string.Format("INSERT INTO Notes VALUES ('{0}','{1}','{2}','{3}','{4}', '{5}' )", note.Title, note.Description, 4, DateTime.Now, note.Content, 4);
             db.ExecuteSql(sql);
         }
 

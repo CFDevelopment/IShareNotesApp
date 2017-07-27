@@ -1,0 +1,43 @@
+﻿@model IShareMVCFinal.Models.Tables.User
+
+@{
+    ViewBag.Title = "AddUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{  
+
+    <div id="signUpForm">
+        
+        <form class="form-horizontal" >               
+            <div class="group">                                            
+                @Html.EditorFor(model => model.UserName)
+                @Html.ValidationMessageFor(model => model.UserName)
+                <span class="highlight"></span>
+                <span class="bar"></span> 
+                @Html.LabelFor(model => model.UserName)                    
+            </div>
+                
+            <div class="group">
+                @Html.EditorFor(model => model.Password)
+                @Html.ValidationMessageFor(model => model.Password)
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                @Html.LabelFor(model => model.Password)
+            </div>
+    
+            <div class="form-group">
+                <div class="col-md-10">
+                    <input type="submit" value="Join" class="btn btn-default" />              
+                </div>
+            </div>
+
+        </form>  
+    </div>
+            
+ 
+        
+}
+

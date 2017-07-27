@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using IShareMVCFinal.DAO;
+using IShareMVCFinal.Models.Tables;
 
 namespace IShareMVCFinal.Controllers
 {
@@ -26,5 +28,20 @@ namespace IShareMVCFinal.Controllers
 
             return View();
         }
+
+        /* Test to add users to add notes */
+        public ActionResult AddUser()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddUser(User user)
+        {
+            UserDAO.Create(user);
+            return Redirect("Index");
+
+        }
+
     }
 }
