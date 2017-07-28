@@ -71,6 +71,11 @@ namespace IShareMVCFinal.Controllers
         }
 
 
+        public ActionResult FormLayout()
+        {
+            return View();
+        }
+
 
     }
 }

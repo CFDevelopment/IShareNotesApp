@@ -1,0 +1,39 @@
+﻿@model IShareMVCFinal.Models.Tables.Note
+
+@{
+    ViewBag.Title = "FormLayout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div id="uiFormComponent">
+    
+    <form>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title) 
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">           
+        </div>
+           
+        <div class="form-group">        
+            @Html.LabelFor(model => model.Description) 
+            <textarea class="form-control" id="desc" rows="3"></textarea>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.Content) 
+            <textarea class="form-control" id="content" rows="7"></textarea>
+        </div>
+        
+        <div class="form-check">
+            <label class="form-check-label">
+                <input type="checkbox" class="form-check-input">
+                Check me out
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+</div>
+
+
+

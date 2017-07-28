@@ -14,7 +14,7 @@ namespace IShareMVCFinal.DAO
             /*Hardcoded user to 1 for testing sake*/
             var db = MyDB.GetInstance();
             var sql =
-                string.Format("INSERT INTO Notes VALUES ('{0}','{1}','{2}','{3}','{4}', '{5}' )", note.Title, note.Description, 4, DateTime.Now, note.Content, 4);
+                string.Format("INSERT INTO Notes VALUES ('{0}','{1}','{2}','{3}','{4}', '{5}' )", note.Title, note.Description, 6, DateTime.Now, note.Content, 6);
             db.ExecuteSql(sql);
         }
 
@@ -42,11 +42,37 @@ namespace IShareMVCFinal.DAO
                     Title = result["noteTitle"].ToString(),
                     Description = result["noteDescription"].ToString(),
                     Content = result["noteContent"].ToString(),
-                    Uploaded = (DateTime)result["uploaded"]
+                    Uploaded = (DateTime)result["uploaded"],
+                    OriginalAuthor = (int)result["originalAuthor"]
                 };
             }
             return null;
         }
-        
+
+        public static List<Note> GetNotes()
+        {
+            var list = new List<Note>();
+
+            var results = MyDB.GetInstance()
+                .ExecuteSelectSql("Select * from Notes");
+
+            while (results.Read())
+            {
+                var note = new Note
+                {
+                    NoteId = (int)results["noteId"],
+                    UserId = (int)results["userId"],
+                    Title = results["noteTitle"].ToString(),
+                    Description = results["noteDescription"].ToString(),
+                    Content = results["noteContent"].ToString(),
+                    Uploaded = (DateTime)results["uploaded"],
+                    OriginalAuthor = (int)results["originalAuthor"]
+                };
+
+                list.Add(note);
+            }
+            return list;
+        }
+ 
     }
 }

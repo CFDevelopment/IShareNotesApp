@@ -340,11 +340,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     -moz-font-feature-settings: "liga" on;
 }
-img {
-    height: auto;
-    max-width: 100%;
-    vertical-align: middle;
-}
+
 .btn {
     background-color: white;
     border: 1px solid #cccccc;
@@ -366,6 +362,7 @@ img {
     margin: 0;
     padding: 0;
 }
+
 .cards__item {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -394,8 +391,9 @@ img {
     -ms-flex-direction: column;
     flex-direction: column;
     overflow: hidden;
+    width: 400px;
 }
-.card:hover .card__image {
+.card:hover{
     -webkit-filter: contrast(100%);
     filter: contrast(100%);
 }
@@ -411,44 +409,10 @@ img {
     -ms-flex-direction: column;
     flex-direction: column;
     padding: 1rem;
+    width: 100%;
 }
-.card__image {
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
-    -webkit-filter: contrast(70%);
-    filter: contrast(70%);
-    overflow: hidden;
-    position: relative;
-    -webkit-transition: -webkit-filter 0.5s cubic-bezier(0.43, 0.41, 0.22, 0.91);
-    transition: -webkit-filter 0.5s cubic-bezier(0.43, 0.41, 0.22, 0.91);
-    transition: filter 0.5s cubic-bezier(0.43, 0.41, 0.22, 0.91);
-    transition: filter 0.5s cubic-bezier(0.43, 0.41, 0.22, 0.91), -webkit-filter 0.5s cubic-bezier(0.43, 0.41, 0.22, 0.91);
-}
-.card__image::before {
-    content: "";
-    display: block;
-    padding-top: 56.25%;
-}
-@media (min-width: 40rem) {
-    .card__image::before {
-        padding-top: 66.6%;
-    }
-}
-.card__image--flowers {
-    background-image: url(https://unsplash.it/800/600?image=82);
-}
-.card__image--river {
-    background-image: url(https://unsplash.it/800/600?image=11);
-}
-.card__image--record {
-    background-image: url(https://unsplash.it/800/600?image=39);
-}
-.card__image--fence {
-    background-image: url(https://unsplash.it/800/600?image=59);
-}
+
+
 .card__title {
     color: #696969;
     font-size: 1.25rem;
@@ -477,7 +441,7 @@ img {
 }
 
 #buttonRow {
-    width: inherit;
+    width: 100%;
     margin: inherit;
 }
 
@@ -489,4 +453,9 @@ img {
 
 #signUpForm {
     margin-top: 10%;
+}
+
+/* Form Layout for Creating a note */
+#uiFormComponent {
+    margin-top: 100px;
 }

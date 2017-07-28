@@ -1,6 +1,12 @@
-﻿@{
+﻿@using IShareMVCFinal.DAO
+@model IShareMVCFinal.Models.Tables.Note
+
+@{
     ViewBag.Title = "Home Page";
 }
+
+<!-- Razor foreach to parse out the notes into bootstrap -->
+
 
 <div class="row">
     <div class="container" id="searchContainer">
@@ -21,168 +27,48 @@
        
         
         <div id="noteCollectionDiv">           
-            <ul class="cards">
-                <li class="cards__item">
-                    <div class="card">                        
-                        <div class="card__content">
-                            <div class="card__title">Blood - Kendrick</div>
-                            <p class="card__text"> So I was takin' a walk the other day, and I seen a woman—a blind woman—pacin' up and down the sidewalk. 
-                                She seemed to be a bit frustrated, as if she had dropped somethin' and havin' a hard time findin' it. So after watchin' her struggle for a while, 
-                                I decide to go over and lend a helping hand, you know? "Hello, ma'am, can I be of any assistance? It seems to me that you have lost something. 
-                                I would like to help you find it." She replied: "Oh yes, you have lost something. You've lost... your life."</p>                            
-                            
-                            <div class="row" id="buttonRow">
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-                                </button>
-
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
-                                </button>
-
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                </button>
-                            </div>
-                                                
-                         
-                        </div>
-                    </div>
-                </li>
-                <li class="cards__item">
-                    <div class="card">                      
-                        <div class="card__content">
-                            <div class="card__title">Flex Grow</div>
-                            <p class="card__text">This defines the ability for a flex item to grow if necessary. It accepts a unitless value that serves as a proportion. It dictates what amount of the available space inside the flex container the item should take up.</p>
-                            <div class="row" id="buttonRow">
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-                                </button>
-
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
-                                </button>
-
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                </button>
+            <ul class="cards">                
+                @foreach (var note in NoteDAO.GetNotes())
+                {
+                    <li class="cards__item">
+                        <div class="card">
+                            <div class="card__content">
+                                <div class="card__title">@note.Title</div>
+                                <p class="card__text"> @note.Description</p>
+                                <div class="row" id="buttonRow">
+                                    <button type="button" class="noteButtons btn btn-default">
+                                        <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" class="noteButtons btn btn-default">
+                                        <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" class="noteButtons btn btn-default">
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    </button>
+                                    
+                                    <button class="testAjax">Make call</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </li>
-                <li class="cards__item">
-                    <div class="card">                        
-                        <div class="card__content">
-                            <div class="card__title">Flex Shrink</div>
-                            <p class="card__text">This defines the ability for a flex item to shrink if necessary. Negative numbers are invalid.</p>
-                            <div class="row" id="buttonRow">
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-                                </button>
-
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
-                                </button>
-
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="cards__item">
-                    <div class="card">                        
-                        <div class="card__content">
-                            <div class="card__title">Flex Basis</div>
-                            <p class="card__text">This defines the default size of an element before the remaining space is distributed. It can be a length (e.g. 20%, 5rem, etc.) or a keyword. The auto keyword means "look at my width or height property."</p>
-                            <div class="row" id="buttonRow">
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-                                </button>
-
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
-                                </button>
-
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="cards__item">
-                    <div class="card">                       
-                        <div class="card__content">
-                            <div class="card__title">Flex Basis</div>
-                            <p class="card__text">This defines the default size of an element before the remaining space is distributed. It can be a length (e.g. 20%, 5rem, etc.) or a keyword. The auto keyword means "look at my width or height property."</p>
-                            <div class="row" id="buttonRow">
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-                                </button>
-
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
-                                </button>
-
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                
-                <li class="cards__item">
-                    <div class="card">                      
-                        <div class="card__content">
-                            <div class="card__title">Flex Basis</div>
-                            <p class="card__text">This defines the default size of an element before the remaining space is distributed. It can be a length (e.g. 20%, 5rem, etc.) or a keyword. The auto keyword means "look at my width or height property."</p>
-                            <div class="row" id="buttonRow">
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-                                </button>
-
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
-                                </button>
-
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                
-                <li class="cards__item">
-                    <div class="card">                        
-                        <div class="card__content">
-                            <div class="card__title">Flex Basis</div>
-                            <p class="card__text">This defines the default size of an element before the remaining space is distributed. It can be a length (e.g. 20%, 5rem, etc.) or a keyword. The auto keyword means "look at my width or height property."</p>
-                            <div class="row" id="buttonRow">
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-                                </button>
-
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
-                                </button>
-
-                                <button type="button" class="noteButtons btn btn-default">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </li>
+                    </li>
+                }
             </ul>
-
-
         </div>
-
     </div>
 </div>
 
 
+
+@section scripts
+{
+   
+    <script>
+        
+        $(".testAjax").click(function () {
+               $.getJSON("")
+            });
+
+        
+
+    </script>   
+}
