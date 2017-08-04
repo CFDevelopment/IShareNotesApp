@@ -52,7 +52,8 @@ namespace IShareMVCFinal.Controllers
             {
                 // TODO: Add insert logic here
                 NoteDAO.Create(note);
-                return RedirectToAction("Display", "Notes", note);
+                return Redirect("Home");
+                //return RedirectToAction("Display", "Notes", note);
             }
             catch
             {

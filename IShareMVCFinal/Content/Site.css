@@ -36,14 +36,6 @@ html, body, main {
     margin-top: 5%;     
 }
 
-#imageUploadBox {
-    width: 30%;
-    height: 300px;
-    border: solid;
-    float: left;
-    margin-right: 5%;
-}
-
 #noteFormDiv {
     float: right;
     width: 60%;
@@ -62,99 +54,6 @@ html, body, main {
     padding:10px 50px 50px;
 }
 
-.group 			  { 
-    position:relative; 
-    margin-bottom:45px;
-}
-input {
-    font-size:18px;
-    padding:10px 10px 10px 5px;
-    display:block;
-    width: 80%;
-    border:none;
-    border-bottom:1px solid #757575; 
-}
-
-input:focus 		{ outline:none; }
-
-/* LABEL ======================================= */
-label 				 {
-    color:#999; 
-    font-size:18px;
-    font-weight:normal;
-    position:absolute;
-    pointer-events:none;
-    left:5px;
-    top:10px;
-    transition:0.2s ease all; 
-    -moz-transition:0.2s ease all; 
-    -webkit-transition:0.2s ease all;
-}
-
-/* active state */
-input:focus ~ label, input:valid ~ label 		{
-    top:-20px;
-    font-size:14px;
-    color:#5264AE;
-}
-
-/* BOTTOM BARS ================================= */
-.bar 	{ position:relative; display:block; width:300px; }
-.bar:before, .bar:after 	{
-    content:'';
-    height:2px; 
-    width:0;
-    bottom:1px; 
-    position:absolute;
-    background:#5264AE; 
-    transition:0.2s ease all; 
-    -moz-transition:0.2s ease all; 
-    -webkit-transition:0.2s ease all;
-}
-.bar:before {
-    left:50%;
-}
-.bar:after {
-    right:50%; 
-}
-
-/* active state */
-input:focus ~ .bar:before, input:focus ~ .bar:after {
-    width:50%;
-}
-
-/* HIGHLIGHTER ================================== */
-.highlight {
-    position:absolute;
-    height:60%; 
-    width:100px; 
-    top:25%; 
-    left:0;
-    pointer-events:none;
-    opacity:0.5;
-}
-
-/* active state */
-input:focus ~ .highlight {
-    -webkit-animation:inputHighlighter 0.3s ease;
-    -moz-animation:inputHighlighter 0.3s ease;
-    animation:inputHighlighter 0.3s ease;
-}
-
-/* ANIMATIONS ================ */
-@-webkit-keyframes inputHighlighter {
-    from { background:#5264AE; }
-    to 	{ width:0; background:transparent; }
-}
-@-moz-keyframes inputHighlighter {
-    from { background:#5264AE; }
-    to 	{ width:0; background:transparent; }
-}
-@keyframes inputHighlighter {
-    from { background:#5264AE; }
-    to 	{ width:0; background:transparent; }
-}
-
 
 /*tags*/
 
@@ -162,8 +61,6 @@ main {
     max-width: 500px;
     /*margin: 0 auto;*/
     margin-left: -2%;
-
-
     padding: 0 30px;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -280,6 +177,10 @@ p {
     margin-top: 5%;
 }
 
+#searchBarContainer {
+    margin-top: 5%;
+}
+
 
 #custom-search-input{
     padding: 3px;
@@ -352,6 +253,7 @@ body {
     display: block;
     width: 100%;
 }
+
 .cards {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -369,6 +271,7 @@ body {
     display: flex;
     padding: 1rem;
 }
+
 @media (min-width: 40rem) {
     .cards__item {
         width: 50%;
@@ -379,6 +282,7 @@ body {
         width: 33.3333%;
     }
 }
+
 .card {
     background-color: white;
     border-radius: 0.25rem;
@@ -386,12 +290,13 @@ body {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: vertical;
+/*    -webkit-box-orient: vertical;*/
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
-    flex-direction: column;
+    /*flex-direction: column;*/
     overflow: hidden;
-    width: 400px;
+    width: 700px;
+  
 }
 .card:hover{
     -webkit-filter: contrast(100%);
@@ -446,9 +351,8 @@ body {
 }
 
 /*
-    
+   
     SIGN UP FORM 
-
 */
 
 #signUpForm {
@@ -458,4 +362,131 @@ body {
 /* Form Layout for Creating a note */
 #uiFormComponent {
     margin-top: 100px;
+}
+
+.inputPadding {
+    padding-top: 4%;
+    padding-bottom: 1%;
+}
+
+.topInputPadding {
+    padding-bottom: 4%;
+}
+
+/*#titlePadding {*/
+/*/*    padding-top: 1%;!1!*/
+/*/*    padding-bottom: 1%;!1!*/
+/*    margin-top: 5px;*/
+/*    margin-bottom: 5px;*/
+/*}*/
+/**/
+/*#descriptionPadding {*/
+/*/*    padding-top: 5px;!1!*/
+/*/*    padding-bottom: 5px;!1!*/
+/*    margin-top: 5px;*/
+/*    margin-bottom: 5px;*/
+/*}*/
+/**/
+/*#contentPadding {*/
+/*/*    padding-top: 5px;!1!*/
+/*/*    padding-bottom: 5px;!1!*/
+/*    margin-top: 5px;*/
+/*    margin-bottom: 5px;*/
+/*}*/
+
+
+#noteCollectionDiv {
+    width: 100%;
+}
+
+
+
+/*Overlay*/
+
+#overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 60%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
+#whiteOverlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 52%; /* Full width (cover the whole page) */
+    height: 82%; /* Full height (cover the whole page) */
+    top: 12%; 
+    left: 3%;
+    right: 0;
+    bottom: 0;
+    background-color: white; /* Black background with opacity */
+    z-index: 10; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
+#closeOverlayBtn {
+    position: absolute;
+    top: 10%;
+    right: 2%;    
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}
+
+
+
+#overlayText{
+    margin-left: 3.5%;
+    margin-right: 3.5%;
+    margin-top: 3.5%;
+}
+
+#noteTitle {
+    font-size: 26px;
+    color: black;
+/*    alignment: left;*/
+}
+
+#noteAuthor {
+    font-size: 22px;
+    color: black;
+/*    alignment: left;*/
+}
+
+#noteDescription {
+    font-size: 18px;
+    color: black;
+/*    alignment: left;*/
+}
+
+#noteContent {
+    font-size: 16px;
+    color: black;
+    alignment: left;
+}
+
+#div2 {
+    margin: 0 auto;
+}
+
+.noteOverlayStyling {
+    margin-top: 40px;
+}
+
+#overlayButtonRow {
+/*   margin-top: 80%;*/
+/*    margin-bottom: 15%;*/
+    top: 50%;
+}
+
+#overlayButtonRow {
+    position: fixed;
+    bottom: -10%;
+    left: 4%;   
 }

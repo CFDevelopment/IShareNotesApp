@@ -15,6 +15,11 @@ namespace IShareMVCFinal.Controllers
             return View();
         }
 
+        public ActionResult TestHome()
+        {
+            return View();
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
