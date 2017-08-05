@@ -1,0 +1,126 @@
+﻿************************************************
+************************************************
+Create Script ********** IShare -> DB NAME
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+USE [IShare]
+GO
+
+/****** Object:  Table [dbo].[Users]    Script Date: 2017-08-05 12:32:23 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Users](
+	[userId] [int] IDENTITY(1,1) NOT NULL,
+	[userName] [nvarchar](50) NOT NULL,
+	[userPassword] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
+(
+	[userId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+USE [IShare]
+GO
+
+/****** Object:  Table [dbo].[Notes]    Script Date: 2017-08-05 12:32:43 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Notes](
+	[noteId] [int] IDENTITY(1,1) NOT NULL,
+	[noteTitle] [nvarchar](200) NOT NULL,
+	[noteDescription] [nvarchar](max) NOT NULL,
+	[userId] [int] NOT NULL,
+	[uploaded] [datetime] NOT NULL,
+	[noteContent] [nvarchar](max) NOT NULL,
+	[originalAuthor] [int] NULL,
+ CONSTRAINT [PK_Notes] PRIMARY KEY CLUSTERED 
+(
+	[noteId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[Notes]  WITH CHECK ADD  CONSTRAINT [FK_Notes_Notes] FOREIGN KEY([noteId])
+REFERENCES [dbo].[Notes] ([noteId])
+GO
+
+ALTER TABLE [dbo].[Notes] CHECK CONSTRAINT [FK_Notes_Notes]
+GO
+
+USE [IShare]
+GO
+
+/****** Object:  Table [dbo].[Tags]    Script Date: 2017-08-05 12:33:26 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Tags](
+	[tagId] [int] IDENTITY(1,1) NOT NULL,
+	[tagName] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_Tags] PRIMARY KEY CLUSTERED 
+(
+	[tagId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+USE [IShare]
+GO
+
+/****** Object:  Table [dbo].[Notes_Tags]    Script Date: 2017-08-05 12:33:38 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Notes_Tags](
+	[noteId] [int] NOT NULL,
+	[tagId] [int] NOT NULL,
+ CONSTRAINT [PK_Notes_Tags] PRIMARY KEY CLUSTERED 
+(
+	[noteId] ASC,
+	[tagId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+USE [IShare]
+GO
+
+/****** Object:  Table [dbo].[Likes]    Script Date: 2017-08-05 12:33:56 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Likes](
+	[userId] [int] NOT NULL,
+	[noteId] [int] NOT NULL,
+ CONSTRAINT [PK_Likes] PRIMARY KEY CLUSTERED 
+(
+	[userId] ASC,
+	[noteId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+

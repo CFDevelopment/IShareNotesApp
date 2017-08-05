@@ -17,5 +17,27 @@ namespace IShareMVCFinal.DAO
             db.ExecuteSql(sql);
         }
 
+        public static User GetUser(User user)
+        {            
+            var db = MyDB.GetInstance();
+            var sql =
+                string.Format("SELECT * FROM Users WHERE userName = '{0}' AND userPassword = '{1}'", user.UserName, user.Password);
+            var result = db.ExecuteSelectSql(sql);
+            if (result.HasRows)
+            {
+                result.Read();
+                return new User
+                {
+                    Id = (int)result["userId"],
+                    UserName = result["userName"].ToString(),
+                    Password = result["userPassword"].ToString()                   
+                };
+            }
+            return null;
+        }
+
+
+
+
     }
 }
