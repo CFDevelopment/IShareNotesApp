@@ -22,12 +22,20 @@ namespace IShareMVCFinal.Controllers
             var activeUser = UserDAO.GetUser(user);
             if (activeUser != null)
             {
-                return Redirect("Register");
+                var userCookie = new HttpCookie("userId", activeUser.Id.ToString());
+                Response.AppendCookie(userCookie);
+                return RedirectToAction("Index", "Home");
             }
-
-            return View();
+            return Redirect("Login");
         }
-        
+
+        [HttpPost]
+        public ActionResult Register(User user)
+        {
+            UserDAO.Create(user);
+            return Redirect("Login");
+        }
+
         public ActionResult Register()
         {
             return View();

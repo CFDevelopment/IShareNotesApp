@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using IShareMVCFinal.DAO;
 using IShareMVCFinal.Models.Tables;
+using IShareMVCFinal.Models.ViewModels;
 
 namespace IShareMVCFinal.Controllers
 {
@@ -12,6 +13,26 @@ namespace IShareMVCFinal.Controllers
     {
         public ActionResult Index()
         {
+            var cookieId = Request.Cookies["userId"];
+            string userId = "";
+
+            if (cookieId != null)
+            {
+                userId = cookieId.Value;
+                var user = UserDAO.GetUser(int.Parse(userId));
+                var noteList = NoteDAO.GetNotes();
+                var like = new Like();
+
+                var likeItem = new LikeViewModel
+                {
+                    UserItem = user,
+                    NoteList = noteList,
+                    LikedItem = like
+                };
+                            
+                return View(likeItem);
+            }
+
             return View();
         }
 

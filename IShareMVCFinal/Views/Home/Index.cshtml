@@ -1,6 +1,6 @@
 ﻿@using IShareMVCFinal.DAO
-@model IShareMVCFinal.Models.Tables.Note
-
+@model IShareMVCFinal.Models.ViewModels.LikeViewModel
+  
 @{
     ViewBag.Title = "Home Page";
 }
@@ -31,12 +31,8 @@
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </button>                                                                    
         </div>
-
-    </div>
-    
-    
+    </div> 
 </div>
-
 
 <div id="searchBarContainer"> 
     <div class="row">
@@ -55,6 +51,8 @@
     </div>
 </div>
 
+<h3>USER: @Model.UserItem.UserName </h3>
+<hr />
 
 <div class="row">
     <div id="div1"></div>
@@ -62,7 +60,7 @@
     <div id="div2" class="col-xs-12">        
         <div id="noteSection">
             <ul class="cards">                
-                @foreach (var note in NoteDAO.GetNotes())
+                @foreach (var note in @Model.NoteList)
                 {
                     <li class="cards__item" id= "@note.NoteId">
                         <div class="card">
@@ -86,7 +84,7 @@
                                     </button>
                                     <button type="button" class="noteButtons btn btn-default">
                                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                    </button>                                                                    
+                                    </button>                                                                                                       
                                 </div>
                             </div>
                         </div>
@@ -99,7 +97,7 @@
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 
-<script type="text/javascript">    
+<script type="text/javascript">
     var noteId, noteTitle, noteAuthor, noteDesc, noteContent;
     var div1 = $("#div1");
     var div2 = $("#div2");
@@ -107,55 +105,78 @@
     var overlayAuthor = $("#noteAuthor");
     var overlayDescription = $("#noteDescription");
     var overlayContent = $("#noteContent");
-    var overlayState = false;   
-   
+    var overlayState = false;
+
     $("#closeOverlayBtn").click(function() {
         RemoveOverlay();
         ResetGrid();
-        $(".cards__item").css("width", "33.3333%");      
+        $(".cards__item").css("width", "33.3333%");
         overlayState = false;
     });
 
+
+    $(document).on("click", ".glyphicon.glyphicon-heart", function() {
+        noteId = $(this).closest("li").attr("id");
+        var color = $( this ).css("color");        
+        if (color == "rgb(255, 0, 0)") {
+            $(this).css("color", "rgb(51, 51, 51)");           
+        }
+        if (color == "rgb(51, 51, 51)") {
+            $(this).css("color", "rgb(255, 0, 0)");        
+        }
+        var like = {
+            UserId: @Model.UserItem.Id,
+            NoteId: noteId
+        };
+        var likeObj = { "like" : like};
+        var ajaxLike = JSON.stringify(likeObj);
+        /*Send AJAX FOR LIKE*/
+        $.ajax({
+            type: "POST",
+            url: "/Like/Add",
+            data: ajaxLike,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        });
+    });
+
+
     $(document).on("click", "li", function () {
         noteId = $(this).closest("li").attr("id");
-//        noteTitle = $(this).find("#title").html();
-//        noteAuthor = $(this).find("#author").html();
-//        noteDesc = $(this).find("#description").html();        
-
         noteTitle = $(this).find("input#title").val();
         noteAuthor = $(this).find("input#author").val();
-        noteDesc = $(this).find("input#description").val();    
+        noteDesc = $(this).find("input#description").val();
         noteContent = $(this).find("input#content").val();
 
         if (!overlayState) {
-            overlayState = true;            
+            overlayState = true;
             AddOverlay(noteId, noteTitle, noteAuthor, noteDesc, noteContent);
-        }  
+        }
     });
 
-    function AddOverlay(noteId, noteTitle, noteAuthor, noteDesc, noteContent) {        
+    function AddOverlay(noteId, noteTitle, noteAuthor, noteDesc, noteContent) {
         RemoveOverlay();
 
         $("#noteSection").addClass("noteOverlayStyling");
         div1.addClass("col-xs-8");
-        div2.addClass("col-xs-4");       
-        $(".cards__item").css("width", "100%");       
+        div2.addClass("col-xs-4");
+        $(".cards__item").css("width", "100%");
         document.getElementById("overlay").style.display = "block";
         document.getElementById("whiteOverlay").style.display = "block";
         ///Need to pass the values from the notes to the overlay
         $(overlayTitle).html(noteTitle);
         $(overlayAuthor).html(noteAuthor);
         $(overlayDescription).html(noteDesc);
-        $(overlayContent).html(noteContent);  
+        $(overlayContent).html(noteContent);
     }
 
-    function RemoveOverlay() {        
-        document.getElementById("searchBarContainer").style.display = "none";      
-        div2.removeClass("col-xs-12");       
+    function RemoveOverlay() {
+        document.getElementById("searchBarContainer").style.display = "none";
+        div2.removeClass("col-xs-12");
         document.getElementById("overlay").style.display = "none";
     }
 
-    function ResetGrid() {       
+    function ResetGrid() {
         div2.addClass("col-xs-12");
         document.getElementById("searchBarContainer").style.display = "block";
     }

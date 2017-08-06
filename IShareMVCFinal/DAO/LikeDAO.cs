@@ -19,6 +19,11 @@ namespace IShareMVCFinal.DAO
                     string.Format("INSERT INTO Likes VALUES ('{0}', '{1}')", like.UserId, like.NoteId);
                 db.ExecuteSql(sql);
             }
+            else
+            {
+                //dislike functionality 
+                Delete(like);
+            }
         }
 
         public static bool CheckIfLikeExists(Like like)
@@ -33,5 +38,14 @@ namespace IShareMVCFinal.DAO
             }
             return false; 
         }
+
+        public static void Delete(Like like)
+        {
+            var db = MyDB.GetInstance();
+            var sql =
+                string.Format("DELETE FROM Likes WHERE userId = '{0}' AND noteId = '{1}'", like.UserId, like.NoteId);
+            db.ExecuteSql(sql);
+        }
+
     }
 }
