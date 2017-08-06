@@ -21,12 +21,18 @@ namespace IShareMVCFinal.Controllers
                 userId = cookieId.Value;
                 var user = UserDAO.GetUser(int.Parse(userId));
                 var noteList = NoteDAO.GetNotes();
+                var likedList = LikeDAO.GetLikedPostsByUser(user.Id);
                 var like = new Like();
+
+                //note list should be the ones they dont delete
+                //select * notes where user like them
+                //return the note id, list of id
 
                 var likeItem = new LikeViewModel
                 {
                     UserItem = user,
                     NoteList = noteList,
+                    LikedList = likedList,
                     LikedItem = like
                 };
                             

@@ -47,5 +47,20 @@ namespace IShareMVCFinal.DAO
             db.ExecuteSql(sql);
         }
 
+        public static List<int> GetLikedPostsByUser(int id)
+        {
+            var list = new List<int>();
+            var db = MyDB.GetInstance();
+            var sql = String.Format("SELECT noteId FROM Likes WHERE userId = '{0}'", id);
+            var results = db.ExecuteSelectSql(sql);
+            
+            while (results.Read())
+            {
+                var noteIdString = (int)results["noteId"];                
+                list.Add(noteIdString);
+            }
+            return list;
+        }
+
     }
 }

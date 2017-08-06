@@ -11,5 +11,6 @@ namespace IShareMVCFinal.Models.ViewModels
         public User UserItem { get; set; }
         public List<Note> NoteList { get; set; }
         public Like LikedItem { get; set; }
+        public List<int> LikedList { get; set; }
     }
 }

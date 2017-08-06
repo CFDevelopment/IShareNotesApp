@@ -2,6 +2,8 @@
 ************************************************
 Create Script ********** IShare -> DB NAME
 
+** NEW DELETED TABLE -> at bottom
+
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 USE [IShare]
@@ -123,4 +125,28 @@ CREATE TABLE [dbo].[Likes](
 ) ON [PRIMARY]
 
 GO
+
+
+USE [IShare]
+GO
+
+/****** Object:  Table [dbo].[Deleted]    Script Date: 2017-08-06 6:52:18 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Deleted](
+	[userId] [int] NOT NULL,
+	[noteId] [int] NOT NULL,
+ CONSTRAINT [PK_Deleted] PRIMARY KEY CLUSTERED 
+(
+	[userId] ASC,
+	[noteId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
 
