@@ -13,8 +13,8 @@ namespace IShareMVCFinal.Controllers
         // GET: Notes
         public ActionResult Index()
         {
-            var note = NoteDAO.GetNote(2);
-            return View(note);
+            
+            return View();
         }
 
         public ActionResult Create()

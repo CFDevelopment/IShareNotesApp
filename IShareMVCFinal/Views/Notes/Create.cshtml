@@ -5,247 +5,56 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm())
+
+
+<hr />
+<hr />
+<hr />
+
+
+@using (Html.BeginForm("Create", "Notes"))
 {
+    @Html.ValidationSummary()
 
-    <div id="noteContentDiv">
-        
-        <div id="imageUploadBox"> </div>
-        
-        <div id="noteFormDiv" class="noteContainer">
-            <form class="form-horizontal" id="noteForm">               
-                <div class="group">                                            
-                    @Html.EditorFor(model => model.Title)
-                    @Html.ValidationMessageFor(model => model.Title)
-                    <span class="highlight"></span>
-                    <span class="bar"></span> 
-                    @Html.LabelFor(model => model.Title)                    
-                </div>
-                
-                <div class="group">
-                    @Html.EditorFor(model => model.Description)
-                    @Html.ValidationMessageFor(model => model.Description)
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    @Html.LabelFor(model => model.Description)
-                </div>
-                
-                <div class="group">                                                           
-                    @Html.EditorFor(model => model.Content)                                        
-                    @Html.ValidationMessageFor(model => model.Content)
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    @Html.LabelFor(model => model.Content)
-                </div>
-                                
-            <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-            <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-                
-                <main>
-                    <p>Separate your tags with a comma</p>
-                    <div class="tags-input"></div>                    
-                </main>
-                
-            <script type="text/javascript">
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title)
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Title)
+    </div>
 
-                var tagArray = [];
-
-                function SendTagRequest(tag) {
-                    console.log(tag);
-                    tagArray.push(tag);
-                    console.log(tagArray.length);
-
-                    for (var i = 0; i < tagArray.length; i++) {
-                        console.log(i + " " + tagArray[i]);
-                    }
-
-
-                    //console.log("Tag Array: " + tagArray);
-
-                    /*$.ajax({
-                        method: "POST",                        
-                        url: "/Tag/Create",
-                        datatype: "json",
-                        data: { "name" : "test" }
-                    });*/
-
-                    /*$.post("/Tag/Create", { tagName: "test" }, function () { alert('Successfully posted to server') });
-                    */
-                }
-
-                var TagsInput = function (element) {
-                    var self = this;
-                    var initChar = "\u200B";
-                    var initCharPattern = new RegExp(initChar, 'g');
-
-                    var insert = function (element) {
-                        if (self.textNode) self.element.insertBefore(element, self.textNode);
-                        else self.element.appendChild(element);
-                    };
-
-                    var updateCursor = function () {
-                        self.cursor = self.blank;
-                    };
-                        
-                    var keydown = function (event) {
-                        if (event.keyCode == 188) {
-                            event.preventDefault();
-                            setTimeout(function () {
-                                var text = self.text;
-                                if (text) {
-                                    self.text = initChar;
-                                    self.add(text);
-                                }
-                            }, 1);
-                        }
-                        else if (event.keyCode == 8) {
-                            if (self.text.replace(initCharPattern, '') == '') {
-                                self.text = initChar + initChar;
-                                if (self.selected) {
-                                    self.element.removeChild(self.selected);
-                                }
-                                else {
-                                    var tags = self.tags;
-                                    var keys = Object.keys(tags)
-                                    if (keys.length > 0) {
-                                        var tag = tags[keys[keys.length - 1]];
-                                        tag.setAttribute('data-selected', '');
-                                    }
-                                }
-                            }
-                        }
-
-                        if (event.keyCode !== 8) {
-                            if (self.selected) self.selected.removeAttribute('data-selected');
-                        }
-                        setTimeout(function () {
-                            updateCursor();
-                        }, 1);
-                    };
-
-                    var focus = function () {
-                        updateCursor();
-                    };
-
-                    Object.defineProperties(this, {
-                        element: {
-                            get: function () {
-                                return element;
-                            },
-                            set: function (v) {
-                                if (typeof v == 'string') v = document.querySelector(v);
-                                element = v instanceof Node ? v : document.createElement('div');
-                                if (!element.className.match(/\btags-input\b/)) element.className += ' tags-input';
-                                if (element.getAttribute('contenteditable') != 'true') element.setAttribute('contenteditable', 'true');
-
-                                element.removeEventListener('keydown', keydown);
-                                element.addEventListener('keydown', keydown);
-
-                                element.removeEventListener('focus', focus);
-                                element.addEventListener('focus', focus);
-                                this.text = initChar;
-                            }
-                        },
-                        tags: {
-                            get: function () {
-                                var element;
-                                var elements = this.element.querySelectorAll('span');
-                                var tags = {};
-                                for (var i = 0; i < elements.length; i++) {
-                                    element = elements[i]
-                                    tags[element.innerText] = element;
-                                }
-
-                                return tags;
-                            }
-                        },
-                        lastChild: {
-                            get: function () {
-                                return this.element.lastChild;
-                            }
-                        },
-                        textNode: {
-                            get: function () {
-                                return this.element.lastChild instanceof Text ? this.element.lastChild : null;
-                            }
-                        },
-                        text: {
-                            get: function () {
-                                return this.textNode ? this.textNode.data : null;
-                            },
-                            set: function (v) {
-                                if (!this.textNode) this.element.appendChild(document.createTextNode(','));
-                                this.textNode.data = v;
-                            },
-                        },
-                        cursor: {
-                            get: function () {
-                                return this.element.getAttribute('data-cursor') !== null;
-                            },
-                            set: function (v) {
-                                if (v) this.element.setAttribute('data-cursor', '');
-                                else this.element.removeAttribute('data-cursor');
-                            }
-                        },
-                        focused: {
-                            get: function () {
-                                return document.activeElement == this.element;
-                            }
-                        },
-                        blank: {
-                            get: function () {
-                                return this.text.replace(initCharPattern, '') == '';
-                            }
-                        },
-                        selected: {
-                            get: function () {
-                                return this.element.querySelector('span[data-selected]');
-                            }
-                        }
-                    });
-
-                    this.add = function (tag) {
-                        //console.log(tag);
-                        /*Trigger ajax call for the tag*/
-
-                        SendTagRequest(tag);
-                        //tagArray.push(tag);
-
-                        tag = tag.replace(initCharPattern, '');
-                        tag = tag.replace(/^\s+/, '').replace(/\s+$/, '');
-                        tag = tag[0].toUpperCase() + tag.toLowerCase().slice(1);
-                        if (tag != '' && this.tags[tag] === undefined) {
-                            var element = document.createElement('span');
-                            element.appendChild(document.createTextNode(tag));
-                            element.setAttribute('contenteditable', 'false');
-
-                            insert(element);
-                        }
-                    };
-
-                    this.remove = function (tag) {
-                        var element = this.tags[tag];
-                        if (element) this.element.removeChild(element);
-                    };
-
-                    this.element = element;
-                };
-
-                var input = new TagsInput('.tags-input');
-            </script>
-       
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Add Note" class="btn btn-default" />
-                        <input type="button" value="Test" onclick="SendTagRequest" class="btn btn-default" />
-                    </div>
-                </div>
-            </form>
-        </div>
-
-
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description)
+        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = "2", cols = "", style = "width: 100%; height: 50px;" })
+        @Html.ValidationMessageFor(m => m.Description)
     </div>
 
 
+    <div class="form-group">
+        @Html.LabelFor(m => m.Content)
+        @Html.TextAreaFor(model => model.Content, new { @class = "form-control", rows = "3", cols = "", style = "width: 100%; height: 70px;" })
+        @Html.ValidationMessageFor(m => m.Content)
+    </div>
+
+    <div id="wrapper">
+        <p>Add a tag "," to enter :)</p>
+        <ul class="tags-input">            
+            <li class="tags-new">
+                <input type="text"> 
+            </li>
+        </ul>  
+    </div>
+
+
+    <button type="submit" class="btn btn-default">Add Note</button>
 }
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/tagScript.js"></script>
+
+
+
+
+
+
 

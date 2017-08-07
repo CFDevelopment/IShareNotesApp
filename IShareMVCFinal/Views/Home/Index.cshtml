@@ -73,7 +73,6 @@
                                 <input type="hidden" id ="description" value="@note.Description" />
                                 <input type="hidden" id ="content" value="@note.Content" />
                                 
-
                                 <div class="row" id="buttonRow">
                                     <button type="button" class="noteButtons btn btn-default">
                                         <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
@@ -112,7 +111,6 @@
         $(".cards__item").css("width", "33.3333%");
         overlayState = false;
     });
-
 
     $(document).on("click", ".glyphicon.glyphicon-heart", function() {
         noteId = $(this).closest("li").attr("id");
