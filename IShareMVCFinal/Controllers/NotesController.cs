@@ -29,7 +29,7 @@ namespace IShareMVCFinal.Controllers
             {
                 // TODO: Add insert logic here
                 NoteDAO.Create(note);
-                return Redirect("Home");
+                return RedirectToAction("Index", "Home");
                 //return RedirectToAction("Display", "Notes", note);
             }
             catch

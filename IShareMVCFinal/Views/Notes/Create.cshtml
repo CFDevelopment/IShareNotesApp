@@ -5,12 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-
 <hr />
 <hr />
 <hr />
-
 
 @using (Html.BeginForm("Create", "Notes"))
 {
@@ -27,8 +24,7 @@
         @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = "2", cols = "", style = "width: 100%; height: 50px;" })
         @Html.ValidationMessageFor(m => m.Description)
     </div>
-
-
+    
     <div class="form-group">
         @Html.LabelFor(m => m.Content)
         @Html.TextAreaFor(model => model.Content, new { @class = "form-control", rows = "3", cols = "", style = "width: 100%; height: 70px;" })
@@ -43,18 +39,12 @@
             </li>
         </ul>  
     </div>
+    
+    <!--Need to make a TAG lis and pass it note and list of tags -->
 
-
-    <button type="submit" class="btn btn-default">Add Note</button>
+    <button type="submit" id="addNoteBtn" class="btn btn-default">Add Note</button>
 }
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <script src="~/Scripts/tagScript.js"></script>
-
-
-
-
-
-
-

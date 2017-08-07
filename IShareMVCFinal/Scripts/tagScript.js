@@ -1,4 +1,30 @@
-﻿function existingTag(text) {
+﻿
+$("#addNoteBtn").click(function() {
+   // alert("submit button clicked");
+    var tagList = new Array();
+    
+    //going to find out the note that was submitted by name of title
+
+    $(".tags").each(function () {        
+        var tag = {
+            Name: $(this).text()
+        };
+        var tagObj = { "tag": tag };
+        var ajaxTag = JSON.stringify(tagObj);
+        //tagList.push(tagObj);
+        /* AJAX TO TAG DB :)  */
+        $.ajax({
+            type: "POST",
+            url: "/Tag/Create",
+            data: ajaxTag,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        });       
+    });
+    //alert("after button clicked");
+});
+
+function existingTag(text) {
     var existing = false,
         text = text.toLowerCase();
 
@@ -8,7 +34,6 @@
             return "";
         }
     });
-
     return existing;
 }
 

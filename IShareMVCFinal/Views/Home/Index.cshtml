@@ -38,7 +38,7 @@
         <div class="col-md-12">               
             <div id="custom-search-input">
                 <div class="input-group col-md-12">
-                    <input type="text" class="form-control input-lg" />
+                    <input type="text" id="searchBarInput" class="form-control input-lg" />
                     <span class="input-group-btn">
                         <button class="btn btn-info btn-lg" type="button">
                             <i class="glyphicon glyphicon-search"></i>
@@ -64,9 +64,12 @@
                     <li class="cards__item" id= "@note.NoteId">
                         <div class="card">
                             <div class="card__content">
-                                <div class="card__title"> @note.Title</div>
-                                <div class="card__title"> @note.UserId</div>
-                                <p class="card__text"> @note.Description</p>
+                               
+                                <div class="clickableContent">
+                                    <div class="card__title"> @note.Title</div>
+                                    <div class="card__title"> @note.UserId</div>
+                                    <p class="card__text"> @note.Description</p>
+                                </div>
                                 
                                 <input type="hidden" id ="title" value="@note.Title" />
                                 <input type="hidden" id ="author" value= "@note.UserId" />
@@ -137,13 +140,13 @@
         });
     });
 
-
-    $(document).on("click", "li", function () {
-        noteId = $(this).closest("li").attr("id");
-        noteTitle = $(this).find("input#title").val();
-        noteAuthor = $(this).find("input#author").val();
-        noteDesc = $(this).find("input#description").val();
-        noteContent = $(this).find("input#content").val();
+    $(document).on("click", ".clickableContent", function () {
+        var closestLi = $(this).closest("li");
+        noteId = $(this).closest("li").attr("id");        
+        noteTitle = closestLi.find("input#title").val();
+        noteAuthor = closestLi.find("input#author").val();
+        noteDesc = closestLi.find("input#description").val();
+        noteContent = closestLi.find("input#content").val();
         if (!overlayState) {
             overlayState = true;
             AddOverlay(noteId, noteTitle, noteAuthor, noteDesc, noteContent);
@@ -176,5 +179,12 @@
         document.getElementById("searchBarContainer").style.display = "block";
     }
 
+    $(document).on("click", ".glyphicon.glyphicon-search", function () {
+        var searchText = $("#searchBarInput").val();
+        alert(searchText);
+    });
+
+    //function to load screen with results
+    //or no results
 </script>
    

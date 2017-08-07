@@ -35,17 +35,8 @@ namespace IShareMVCFinal.DAO
             }
             return false; //return false if no tag matches in database
         }
+
+        //return list of notes where tagName
        
-        public static void Test(string tagName)
-       {
-            var db = MyDB.GetInstance();
-            var sql =
-                string.Format("INSERT INTO Tags VALUES ('{0}')", tagName.ToLower());
-            db.ExecuteSql(sql);
-        }
-
-
-
-
     }
 }
