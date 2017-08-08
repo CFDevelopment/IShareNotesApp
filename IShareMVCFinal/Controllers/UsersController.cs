@@ -41,5 +41,13 @@ namespace IShareMVCFinal.Controllers
             return View();
         }
 
+        /*Pass ID of NoteId you select & RETURN User who wrote it*/
+        public ActionResult GetAuthor(User user)
+        {
+           // var x = UserDAO.GetUser(user.Id);
+           // var authorCookie = new HttpCookie("authorName", x.UserName);
+           // Response.AppendCookie(authorCookie);
+            return View();
+        }
     }
 }

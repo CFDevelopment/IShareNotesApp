@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using IShareMVCFinal.DAO;
 using IShareMVCFinal.Models.Tables;
+using IShareMVCFinal.Models.ViewModels;
 
 namespace IShareMVCFinal.Controllers
 {
@@ -19,6 +20,22 @@ namespace IShareMVCFinal.Controllers
 
         public ActionResult Create()
         {
+            var cookieId = Request.Cookies["userId"];
+            string userId = "";
+
+            if (cookieId != null)
+            {
+                userId = cookieId.Value;
+                var user = UserDAO.GetUser(int.Parse(userId));
+                var note = new Note();
+                
+                var createItem = new CreateNoteUserModelView
+                {
+                    UserItem = user,
+                    NoteItem = note                   
+                };
+                return View(createItem);
+            }
             return View();
         }
 

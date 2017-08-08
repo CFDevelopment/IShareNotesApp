@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using IShareMVCFinal.DB;
+using IShareMVCFinal.Models.ViewModels;
 
 namespace IShareMVCFinal.DAO
 {
@@ -14,7 +15,7 @@ namespace IShareMVCFinal.DAO
             /*Hardcoded user to 1 for testing sake*/
             var db = MyDB.GetInstance();
             var sql =
-                string.Format("INSERT INTO Notes VALUES ('{0}','{1}','{2}','{3}','{4}', '{5}' )", note.Title, note.Description, 6, DateTime.Now, note.Content, 6);
+                string.Format("INSERT INTO Notes VALUES ('{0}','{1}','{2}','{3}','{4}', '{5}' )", note.Title, note.Description, note.UserId, DateTime.Now, note.Content, note.OriginalAuthor);
             db.ExecuteSql(sql);
         }
 
@@ -49,30 +50,30 @@ namespace IShareMVCFinal.DAO
             return null;
         }
 
-        public static List<Note> GetNotes()
+        public static List<NoteViewModel> GetNotes()
         {
-            var list = new List<Note>();
+            var list = new List<NoteViewModel>();
+            var db = MyDB.GetInstance();
+            var sql = string.Format("select * from Notes n join Users u ON n.userId = u.userId");
 
-            var results = MyDB.GetInstance()
-                .ExecuteSelectSql("Select * from Notes");
+            var results = db.ExecuteSelectSql(sql);
 
             while (results.Read())
             {
-                var note = new Note
+                var noteViewModel = new NoteViewModel
                 {
                     NoteId = (int)results["noteId"],
                     UserId = (int)results["userId"],
+                    UserName = results["userName"].ToString(),
                     Title = results["noteTitle"].ToString(),
                     Description = results["noteDescription"].ToString(),
                     Content = results["noteContent"].ToString(),
                     Uploaded = (DateTime)results["uploaded"],
                     OriginalAuthor = (int)results["originalAuthor"]
                 };
-
-                list.Add(note);
+                list.Add(noteViewModel);
             }
             return list;
         }
- 
     }
 }

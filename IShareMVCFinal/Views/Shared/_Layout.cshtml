@@ -4,41 +4,70 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-          
-            
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("IShare", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+   <script src="~/Scripts/tagScript.js"></script>
 
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Add Note", "Create", "Notes")</li>                    
-                </ul>                
-            </div>
-           
+<style type="text/css">
+    @@font-face
+    {
+        font-family: 'TSTARBold'; 
+        src: url('/TSTAR-TW-PRO-Bold-1.ttf'); 
+    }
+    @@font-face
+    {
+        font-family: 'TSTARRegular'; 
+        src: url('/TSTAR-TW-PRO-Regular-1.ttf'); 
+    }
+    .tsarB 
+    {
+        font-family: 'TSTARBold';
+    }
+    .tsarR 
+    {
+        font-family: 'TSTARRegular';
+    }
+    .robo {
+        font-family: 'Roboto', sans-serif;
+    }
+</style>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("IShare", "Index", "Home", new {area = ""}, new {@class = "navbar-brand"})
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-     
-    </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Add Note", "Create", "Notes")</li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+<div class="container body-content">
+    @RenderBody()
+    <hr/>
+
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)
 </body>
 </html>

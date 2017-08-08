@@ -1,4 +1,4 @@
-﻿@model IShareMVCFinal.Models.Tables.Note
+﻿@model IShareMVCFinal.Models.ViewModels.CreateNoteUserModelView
 
 @{
     ViewBag.Title = "Create";
@@ -14,22 +14,25 @@
     @Html.ValidationSummary()
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Title)
-        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Title)
+        @Html.LabelFor(m => m.NoteItem.Title)
+        @Html.TextBoxFor(m => m.NoteItem.Title, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NoteItem.Title)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Description)
-        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = "2", cols = "", style = "width: 100%; height: 50px;" })
-        @Html.ValidationMessageFor(m => m.Description)
+        @Html.LabelFor(m => m.NoteItem.Description)
+        @Html.TextAreaFor(model => model.NoteItem.Description, new { @class = "form-control", rows = "2", cols = "", style = "width: 100%; height: 50px;" })
+        @Html.ValidationMessageFor(m => m.NoteItem.Description)
     </div>
     
     <div class="form-group">
-        @Html.LabelFor(m => m.Content)
-        @Html.TextAreaFor(model => model.Content, new { @class = "form-control", rows = "3", cols = "", style = "width: 100%; height: 70px;" })
-        @Html.ValidationMessageFor(m => m.Content)
+        @Html.LabelFor(m => m.NoteItem.Content)
+        @Html.TextAreaFor(model => model.NoteItem.Content, new { @class = "form-control", rows = "3", cols = "", style = "width: 100%; height: 70px;" })
+        @Html.ValidationMessageFor(m => m.NoteItem.Content)
     </div>
+
+    @Html.HiddenFor(m => m.NoteItem.OriginalAuthor, Model.UserItem.Id)
+    @Html.HiddenFor(m => m.NoteItem.UserId, Model.UserItem.Id)
 
     <div id="wrapper">
         <p>Add a tag "," to enter :)</p>

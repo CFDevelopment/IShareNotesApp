@@ -227,7 +227,9 @@
     <Compile Include="Models\Tables\Note_Tag.cs" />
     <Compile Include="Models\Tables\Tag.cs" />
     <Compile Include="Models\Tables\User.cs" />
+    <Compile Include="Models\ViewModels\CreateNoteUserModelView.cs" />
     <Compile Include="Models\ViewModels\LikeViewModel.cs" />
+    <Compile Include="Models\ViewModels\NoteViewModel.cs" />
     <Compile Include="Models\ViewModels\TagNoteViewModel.cs" />
     <Compile Include="Models\ViewModels\TagViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -258,6 +260,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\NoteScript.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\tagScript.js" />
@@ -307,6 +310,8 @@
     <Content Include="Views\Home\TestHome.cshtml" />
     <Content Include="Views\Users\Login.cshtml" />
     <Content Include="Views\Users\Register.cshtml" />
+    <Content Include="TSTAR-TW-PRO-Bold-1.ttf" />
+    <Content Include="TSTAR-TW-PRO-Regular-1.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
