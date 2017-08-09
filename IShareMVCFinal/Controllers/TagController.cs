@@ -11,13 +11,7 @@ namespace IShareMVCFinal.Controllers
 {
     public class TagController : Controller
     {
-        [HttpPost]
-        // GET: Tag
-        public ActionResult Index(string tag)
-        {
-            return Content(tag);
-        }
-
+       
         [HttpPost]
         public ActionResult Create(Tag tag)
         {          

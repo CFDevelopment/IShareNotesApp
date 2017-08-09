@@ -11,13 +11,7 @@ namespace IShareMVCFinal.Controllers
 {
     public class NotesController : Controller
     {
-        // GET: Notes
-        public ActionResult Index()
-        {
-            
-            return View();
-        }
-
+        
         public ActionResult Create()
         {
             var cookieId = Request.Cookies["userId"];
@@ -54,23 +48,6 @@ namespace IShareMVCFinal.Controllers
                 return View();
             }
         }
-
-        public ActionResult Delete()
-        {
-            return View();
-        }
-
-        public ActionResult Display(Note note)
-        {
-            return View(note);
-        }
-
-
-        public ActionResult FormLayout()
-        {
-            return View();
-        }
-
 
     }
 }

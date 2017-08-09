@@ -10,10 +10,20 @@ namespace IShareMVCFinal.Controllers
 {
     public class UsersController : Controller
     {
-        // GET: Users
+        public ActionResult Register()
+        {
+            return View();
+        }
+              
         public ActionResult Login()
         {
             return View();
+        }
+        [HttpPost]
+        public ActionResult Register(User user)
+        {
+            UserDAO.Create(user);
+            return Redirect("Login");
         }
 
         [HttpPost]
@@ -29,25 +39,9 @@ namespace IShareMVCFinal.Controllers
             return Redirect("Login");
         }
 
-        [HttpPost]
-        public ActionResult Register(User user)
-        {
-            UserDAO.Create(user);
-            return Redirect("Login");
-        }
-
-        public ActionResult Register()
+        public ActionResult Account()
         {
             return View();
-        }
-
-        /*Pass ID of NoteId you select & RETURN User who wrote it*/
-        public ActionResult GetAuthor(User user)
-        {
-           // var x = UserDAO.GetUser(user.Id);
-           // var authorCookie = new HttpCookie("authorName", x.UserName);
-           // Response.AppendCookie(authorCookie);
-            return View();
-        }
+        }    
     }
 }

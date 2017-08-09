@@ -6,10 +6,7 @@
 }
 
 
-
-
 <div id="overlay">
-    <span class="glyphicon glyphicon-chevron-left" id="leftArrow" aria-hidden="true"></span>
     <button type="button" class="btn btn-default" id="closeOverlayBtn">
         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
     </button>
@@ -149,7 +146,6 @@
     var overlayAuthor = $(".noteAuthor");
     var overlayDescription = $(".noteDescription");
     var overlayContent = $(".noteContent");
-    var leftArrow = $("#leftArrow");
 
     $(document).on("click", ".glyphicon.glyphicon-heart", function() {
         noteId = $(this).closest("li").attr("id");
@@ -229,7 +225,6 @@
         if (interaction === "repostClick") {
             AddRepostOverlay(noteTitle, noteAuthorName, noteAuthorId, noteDesc, noteContent, noteUploaded);
         }
-        $(leftArrow).css("display", "block");
     }
 
     function AddOverlay(noteId, noteTitle, noteAuthor, noteDesc, noteContent) {
@@ -268,14 +263,11 @@
 
     function PrepOverlay(overlay) {
         document.getElementById("searchBarContainer").style.display = "none";
-        div2.removeClass("col-xs-12");
-        $(leftArrow).css("display", "none");
-        if (overlay === "basic") {
-            //document.getElementById("overlay").style.display = "none";
+        div2.removeClass("col-xs-12");        
+        if (overlay === "basic") {           
             $("#overlay").css("display", "none").delay(1000);
         } else if (overlay === "repost") {
-            $("#repostOverlay").css("display", "none").delay(1000);
-            // document.getElementById("repostOverlay").style.display = "none";      
+            $("#repostOverlay").css("display", "none").delay(1000);                
         } else {
             $("#repostOverlay").css("display", "none").delay(1000);
             $("#overlay").css("display", "none").delay(1000);

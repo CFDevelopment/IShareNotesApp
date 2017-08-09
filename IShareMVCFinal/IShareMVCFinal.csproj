@@ -312,6 +312,8 @@
     <Content Include="Views\Users\Register.cshtml" />
     <Content Include="TSTAR-TW-PRO-Bold-1.ttf" />
     <Content Include="TSTAR-TW-PRO-Regular-1.ttf" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Users\Account.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

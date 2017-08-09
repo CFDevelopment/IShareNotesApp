@@ -37,29 +37,39 @@
     .robo {
         font-family: 'Roboto', sans-serif;
     }
+
 </style>
 
-<div class="navbar navbar-inverse navbar-fixed-top">
+
+<nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
     <div class="container">
-
-
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> <i class="fa fa-bars"></i>
             </button>
-            @Html.ActionLink("IShare", "Index", "Home", new {area = ""}, new {@class = "navbar-brand"})
+            @Html.ActionLink("IShare", "Index", "Home", new {area = ""}, new {@class = "navbar-brand"})           
         </div>
-
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Add Note", "Create", "Notes")</li>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+               
+                 <li class="hidden">
+                     @Html.ActionLink("IShare", "Index", "Home")
+                </li>
+                <li>
+                    @Html.ActionLink("Add Note", "Create", "Notes")
+                </li>
+                <li>
+                    <a class="page-scroll" href="#">Account</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#">Logout</a>
+                </li>
             </ul>
         </div>
-
     </div>
-</div>
+</nav>
+    
+
 <div class="container body-content">
     @RenderBody()
     <hr/>

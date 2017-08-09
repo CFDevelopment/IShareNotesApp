@@ -11,6 +11,12 @@ namespace IShareMVCFinal.Controllers
 {
     public class HomeController : Controller
     {
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+        
         public ActionResult Index()
         {
             var cookieId = Request.Cookies["userId"];
@@ -42,39 +48,6 @@ namespace IShareMVCFinal.Controllers
             }
 
             return View();
-        }
-
-        public ActionResult TestHome()
-        {
-            return View();
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        /* Test to add users to add notes */
-        public ActionResult AddUser()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult AddUser(User user)
-        {
-            UserDAO.Create(user);
-            return Redirect("Index");
-
         }
 
     }
