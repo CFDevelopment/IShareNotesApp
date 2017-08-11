@@ -4,7 +4,7 @@
 }*/
 
 
-/*NAV BAR*/
+/*NAV BAR
 
 .navbar-custom {
     background-color: white;
@@ -100,8 +100,14 @@
         font-size: 1.5em;
     }
 }
-
+*/
 /*End Nav*/
+
+
+.postLiked {
+    color: red;
+} 
+
 
 html, body, main {
     height: 100%;

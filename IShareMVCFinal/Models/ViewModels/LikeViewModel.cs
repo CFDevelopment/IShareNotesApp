@@ -15,6 +15,6 @@ namespace IShareMVCFinal.Models.ViewModels
         public Like LikedItem { get; set; }
         public List<int> LikedList { get; set; }
         public Note NoteItem { get; set; }
-
+        public Note Repost { get; set; }
     }
 }

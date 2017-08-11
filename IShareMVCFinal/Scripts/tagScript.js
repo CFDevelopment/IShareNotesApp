@@ -1,25 +1,68 @@
 ﻿
-$("#addNoteBtn").click(function() {
-   // alert("submit button clicked");
+
+
+$("#repostSubmitBtn").click(function () {
+
+    alert("wtf");
+    // alert("submit button clicked");
     var tagList = new Array();
-    
+
     //going to find out the note that was submitted by name of title
 
-    $(".tags").each(function () {        
+    $(".tags").each(function () {
+
+        alert($(this).text());
+
         var tag = {
             Name: $(this).text()
         };
-        var tagObj = { "tag": tag };
-        var ajaxTag = JSON.stringify(tagObj);
+
+        ////test += " " + tag;
+       // console.log("d" + test);
+        //var tagObj = { "tag": tag };
+       // var ajaxTag = JSON.stringify(tagObj);
+
         //tagList.push(tagObj);
-        /* AJAX TO TAG DB :)  */
+        /* AJAX TO TAG DB :)  
         $.ajax({
             type: "POST",
             url: "/Tag/Create",
             data: ajaxTag,
             contentType: "application/json; charset=utf-8",
             dataType: "json"
-        });       
+        });       */
+    });
+    //alert("after button clicked");
+});
+
+$("#addNoteBtn").click(function () {
+   // alert("submit button clicked");
+    var tagList = new Array();
+    
+    //going to find out the note that was submitted by name of title
+
+    $(".tags").each(function () {    
+
+        alert($(this).text());
+
+        var tag = {           
+            Name: $(this).text()
+        };
+
+        test += " " + tag;
+        console.log("d" + test);
+        var tagObj = { "tag": tag };
+        var ajaxTag = JSON.stringify(tagObj);
+
+        //tagList.push(tagObj);
+        /* AJAX TO TAG DB :)  
+        $.ajax({
+            type: "POST",
+            url: "/Tag/Create",
+            data: ajaxTag,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        });       */
     });
     //alert("after button clicked");
 });

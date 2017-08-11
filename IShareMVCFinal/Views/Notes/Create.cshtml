@@ -9,45 +9,124 @@
 <hr />
 <hr />
 
-@using (Html.BeginForm("Create", "Notes"))
-{
-    @Html.ValidationSummary()
+<div>
+
+    <h5> @Model.UserItem.Id </h5>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.NoteItem.Title)
-        @Html.TextBoxFor(m => m.NoteItem.Title, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.NoteItem.Title)
+        <label for="example-color-input" class="col-2 col-form-label">Title</label>
+        <div class="col-10">
+            <input class="form-control tsarB" type="text" id="createTitle" style="width: 80%;">
+        </div>
     </div>
-
     <div class="form-group">
-        @Html.LabelFor(m => m.NoteItem.Description)
-        @Html.TextAreaFor(model => model.NoteItem.Description, new { @class = "form-control", rows = "2", cols = "", style = "width: 100%; height: 50px;" })
-        @Html.ValidationMessageFor(m => m.NoteItem.Description)
+        <label for="example-color-input" class="col-2 col-form-label">Description</label>
+        <div class="col-10">
+            <textarea class="form-control robo" rows="3" value="" id="createDesc" style="width: 80%;"> </textarea>
+        </div>
     </div>
-    
     <div class="form-group">
-        @Html.LabelFor(m => m.NoteItem.Content)
-        @Html.TextAreaFor(model => model.NoteItem.Content, new { @class = "form-control", rows = "3", cols = "", style = "width: 100%; height: 70px;" })
-        @Html.ValidationMessageFor(m => m.NoteItem.Content)
+        <label for="example-color-input" class="col-2 col-form-label">Content</label>
+        <div class="col-10">
+            <textarea class="form-control robo" rows="5" value="" id="createContent" style="width: 80%;"> </textarea>
+        </div>
     </div>
 
-    @Html.HiddenFor(m => m.NoteItem.OriginalAuthor, Model.UserItem.Id)
-    @Html.HiddenFor(m => m.NoteItem.UserId, Model.UserItem.Id)
-
-    <div id="wrapper">
+    <div id="repostWrapper">
         <p>Add a tag "," to enter :)</p>
-        <ul class="tags-input">            
+        <ul class="tags-input">
             <li class="tags-new">
-                <input type="text"> 
+                <input type="text">
             </li>
-        </ul>  
+        </ul>
     </div>
-    
-    <!--Need to make a TAG lis and pass it note and list of tags -->
 
-    <button type="submit" id="addNoteBtn" class="btn btn-default">Add Note</button>
-}
+    <button type="button" class="btn btn-default" id="addNoteBtn"> Add Note </button>
+</div> 
+
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-<script src="~/Scripts/tagScript.js"></script>
+
+<script type="text/javascript">
+
+    var tagStrings = "";
+
+    $("#addNoteBtn").click(function () {
+
+        $(".tags").each(function () {
+            tagStrings += " " + $(this).text();
+        });
+
+        var currentUserId = @Model.UserItem.Id;
+        
+        console.log($("#createTitle").val());
+        console.log($("#createDesc").val());
+        console.log(currentUserId);
+        console.log($("#createContent").val());
+        console.log(currentUserId);
+        console.log(tagStrings);
+
+        var ajaxNote = {
+            NoteId: "",
+            UserId: currentUserId,
+            OriginalAuthor: currentUserId,
+            Title: $("#createTitle").val(),
+            Description: $("#createDesc").val(),
+            Content: $("#createContent").val(),
+            Uploaded: "",
+            TagList: tagStrings
+        };
+
+        var createObj = { "note": ajaxNote };
+        var ajaxCreate = JSON.stringify(createObj);
+
+        $.ajax({
+            type: "POST",
+            url: "/Notes/Create",
+            data: ajaxCreate,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"            
+        });
+
+        console.log(ajaxCreate);    
+        window.location.href = "/Home/Index";
+    });
+
+    function existingTag(text) {
+        var existing = false,
+            text = text.toLowerCase();
+
+        $(".tags").each(function () {
+            if ($(this).text().toLowerCase() == text) {
+                existing = true;
+                return "";
+            }
+        });
+        return existing;
+    }
+
+    $(function () {
+        $(".tags-new input").focus();
+        $(".tags-new input").keyup(function () {
+            var tag = $(this).val().trim(),
+                length = tag.length;
+
+            if ((tag.charAt(length - 1) == ',') && (tag != ",")) {
+                tag = tag.substring(0, length - 1);
+
+                if (!existingTag(tag)) {
+                    $('<li class="tags"><span>' + tag + '</span><i class="fa fa-times"></i></i></li>').insertBefore($(".tags-new"));
+                    $(this).val("");
+                }
+                else {
+                    $(this).val(tag);
+                }
+            }
+        });
+
+        $(document).on("click", ".tags i", function () {
+            $(this).parent("li").remove();
+        });
+    });
+</script>

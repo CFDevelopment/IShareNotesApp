@@ -14,7 +14,7 @@ namespace IShareMVCFinal.Models.Tables
         public string Description { get; set; }
         public string Content { get; set; }
         public DateTime Uploaded { get; set; }
-
+        public string TagList { get; set; }
         
     }
 }

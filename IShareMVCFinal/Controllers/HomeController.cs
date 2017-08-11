@@ -28,8 +28,12 @@ namespace IShareMVCFinal.Controllers
                 var user = UserDAO.GetUser(int.Parse(userId));
                 var noteList = NoteDAO.GetNotes();
                 var likedList = LikeDAO.GetLikedPostsByUser(user.Id);
+                //  list of items they have reposted        
+                //  list of items they have posted
+                //  list of items they have not deleted to populate
                 var like = new Like();
                 var author = new User();
+                var repost = new Note();
 
                 //note list should be the ones they dont delete
                 //select * notes where user like them
@@ -41,7 +45,8 @@ namespace IShareMVCFinal.Controllers
                     NoteList = noteList,
                     LikedList = likedList,
                     Author = author,
-                    LikedItem = like
+                    LikedItem = like,
+                    Repost = repost
                 };
                             
                 return View(likeItem);

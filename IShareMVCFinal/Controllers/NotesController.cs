@@ -38,15 +38,35 @@ namespace IShareMVCFinal.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
+             
                 NoteDAO.Create(note);
-                return RedirectToAction("Index", "Home");
-                //return RedirectToAction("Display", "Notes", note);
+                //get tags
+                var tagList = note.TagList;
+                char[] delimiter = {' '};                
+                string[] tags = tagList.Split(delimiter);
+
+               foreach (var tag in tags)
+                {
+                    if(tag != null || tag != "")
+                    {
+                        var t = new Tag
+                        {
+                            Name = tag
+                        };
+                        TagDAO.Create(t);
+                    }                 
+                }
+                
+                //return JavaScript("window.location = '" + Url.Action("Index", "Home") + "'");
+               return RedirectToAction("Index", "Home");             
             }
             catch
             {
+                return RedirectToAction("Index", "Home");
                 return View();
             }
+
+            return RedirectToAction("Index", "Home");
         }
 
     }

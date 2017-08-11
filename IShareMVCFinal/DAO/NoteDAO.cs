@@ -15,7 +15,7 @@ namespace IShareMVCFinal.DAO
             /*Hardcoded user to 1 for testing sake*/
             var db = MyDB.GetInstance();
             var sql =
-                string.Format("INSERT INTO Notes VALUES ('{0}','{1}','{2}','{3}','{4}', '{5}' )", note.Title, note.Description, note.UserId, DateTime.Now, note.Content, note.OriginalAuthor);
+                string.Format("INSERT INTO Notes VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}' )", note.Title, note.Description, note.UserId, DateTime.Now, note.Content, note.OriginalAuthor, note.TagList);
             db.ExecuteSql(sql);
         }
 
@@ -32,19 +32,20 @@ namespace IShareMVCFinal.DAO
             var db = MyDB.GetInstance();
             var sql =
                 string.Format("SELECT * FROM Notes WHERE noteId = {0}", id);
-            var result = db.ExecuteSelectSql(sql);
-            if (result.HasRows)
+            var results = db.ExecuteSelectSql(sql);
+            if (results.HasRows)
             {
-                result.Read();
+                results.Read();
                 return new Note
                 {
-                    NoteId = (int)result["noteId"],
-                    UserId = (int)result["userId"],
-                    Title = result["noteTitle"].ToString(),
-                    Description = result["noteDescription"].ToString(),
-                    Content = result["noteContent"].ToString(),
-                    Uploaded = (DateTime)result["uploaded"],
-                    OriginalAuthor = (int)result["originalAuthor"]
+                    NoteId = (int)results["noteId"],
+                    UserId = (int)results["userId"],
+                    Title = results["noteTitle"].ToString(),
+                    Description = results["noteDescription"].ToString(),
+                    Content = results["noteContent"].ToString(),
+                    Uploaded = (DateTime)results["uploaded"],
+                    OriginalAuthor = (int)results["originalAuthor"],
+                    TagList = results["tagList"].ToString()
                 };
             }
             return null;
@@ -69,11 +70,67 @@ namespace IShareMVCFinal.DAO
                     Description = results["noteDescription"].ToString(),
                     Content = results["noteContent"].ToString(),
                     Uploaded = (DateTime)results["uploaded"],
-                    OriginalAuthor = (int)results["originalAuthor"]
+                    OriginalAuthor = (int)results["originalAuthor"],
+                    TagList = results["tagList"].ToString()
                 };
                 list.Add(noteViewModel);
             }
             return list;
         }
+
+        public static List<NoteViewModel> GetRepostedNotes()
+        {
+            var list = new List<NoteViewModel>();
+            var db = MyDB.GetInstance();
+            var sql = string.Format("select * from Notes n join Users u ON n.userId = u.userId");
+
+            var results = db.ExecuteSelectSql(sql);
+
+            while (results.Read())
+            {
+                var noteViewModel = new NoteViewModel
+                {
+                    NoteId = (int)results["noteId"],
+                    UserId = (int)results["userId"],
+                    UserName = results["userName"].ToString(),
+                    Title = results["noteTitle"].ToString(),
+                    Description = results["noteDescription"].ToString(),
+                    Content = results["noteContent"].ToString(),
+                    Uploaded = (DateTime)results["uploaded"],
+                    OriginalAuthor = (int)results["originalAuthor"],
+                    TagList = results["tagList"].ToString()
+                };
+                list.Add(noteViewModel);
+            }
+            return list;
+        }
+
+        public static List<NoteViewModel> GetOriginalPosts()
+        {
+            var list = new List<NoteViewModel>();
+            var db = MyDB.GetInstance();
+            var sql = string.Format("select * from Notes n join Users u ON n.userId = u.userId");
+
+            var results = db.ExecuteSelectSql(sql);
+
+            while (results.Read())
+            {
+                var noteViewModel = new NoteViewModel
+                {
+                    NoteId = (int)results["noteId"],
+                    UserId = (int)results["userId"],
+                    UserName = results["userName"].ToString(),
+                    Title = results["noteTitle"].ToString(),
+                    Description = results["noteDescription"].ToString(),
+                    Content = results["noteContent"].ToString(),
+                    Uploaded = (DateTime)results["uploaded"],
+                    OriginalAuthor = (int)results["originalAuthor"],
+                    TagList = results["tagList"].ToString()
+                };
+                list.Add(noteViewModel);
+            }
+            return list;
+        }
+
     }
 }

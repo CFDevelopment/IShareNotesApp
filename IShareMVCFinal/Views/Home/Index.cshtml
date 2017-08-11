@@ -40,11 +40,12 @@
                 
         <h2 class="tsarB" id="overlayOAuthor"></h2> 
         <h3 class="tsarB" id="overlayUpload"></h3>
+
              
         <div class="form-group">
             <label for="example-color-input" class="col-2 col-form-label">Title</label>
             <div class="col-10">
-                <input class="form-control tsarB" type="text" value="" id="repostTitle" style="width: 80%;">
+                <input class="form-control tsarB" type="text" id="repostTitle" style="width: 80%;">
             </div>
         </div>
         <div class="form-group">
@@ -101,7 +102,7 @@
                     <li class="cards__item" id= "@note.NoteId">
                         <div class="card">
                             <div class="card__content">
-                               
+                    
                                 <div class="clickableContent">
                                     <div class="card__title"> @note.Title</div>
                                     <div class="card__title"> @note.UserName</div>
@@ -116,9 +117,32 @@
                                 <input type="hidden" id="uploaded" value="@note.Uploaded.Date" />
                                 
                                 <div class="row" id="buttonRow">
-                                    <button type="button" class="noteButtons btn btn-default">
-                                        <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+
+                                    <button type="button" class="noteButtons likedPost btn btn-default">                                     
+                                        <span class="glyphicon glyphicon-heart" id=@string.Format("like{0}", note.NoteId) aria-hidden="true"></span>
                                     </button>
+
+
+                                    @if (Model.LikedList.Count != 0)
+                                    {
+                                        foreach (var likedItem in Model.LikedList)
+                                        {                                           
+                                            if (likedItem == note.NoteId)
+                                            {
+                                                <script type="text/javascript">
+                                                   // alert("found like");
+                                                    var tagID =@string.Format("like{0}", note.NoteId)
+                                                        console.log(tagID);
+                                                    $(tagID).css("color", "red");
+                                                    //el.style.color = "red";
+                                                </script>
+                                            }
+                                           
+                                        }
+                                    }
+                                     
+                                    
+
                                     <button type="button" class="noteButtons btn btn-default">
                                         <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
                                     </button>
@@ -136,9 +160,11 @@
 </div>
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<!--script src="~/Scripts/tagScript.js"></script-->
 
 <script type="text/javascript">
-   
+
+
     var noteId, noteTitle, noteAuthorId, noteAuthorName, noteDesc, noteContent, noteUploaded;
     var div1 = $("#div1");
     var div2 = $("#div2");
@@ -146,22 +172,23 @@
     var overlayAuthor = $(".noteAuthor");
     var overlayDescription = $(".noteDescription");
     var overlayContent = $(".noteContent");
+    var tagStrings = "";
 
     $(document).on("click", ".glyphicon.glyphicon-heart", function() {
         noteId = $(this).closest("li").attr("id");
-        var color = $( this ).css("color");        
+        var color = $( this ).css("color");
         if (color == "rgb(255, 0, 0)") {
-            $(this).css("color", "rgb(51, 51, 51)");           
+            $(this).css("color", "rgb(51, 51, 51)");
         }
         if (color == "rgb(51, 51, 51)") {
-            $(this).css("color", "rgb(255, 0, 0)");        
+            $(this).css("color", "rgb(255, 0, 0)");
         }
         var like = {
             UserId: @Model.UserItem.Id,
             NoteId: noteId
         };
-        var likeObj = { "like": like };
-        var ajaxLike = JSON.stringify(likeObj); 
+        //var likeObj = { "like": like };
+        var ajaxLike = JSON.stringify(like);
         $.ajax({
             type: "POST",
             url: "/Like/Add",
@@ -169,45 +196,42 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json"
         });
+
+        console.log(ajaxLike);
     });
 
     $(document).on("click", ".glyphicon.glyphicon-retweet", function() {
         noteId = $(this).closest("li").attr("id");
-        var color = $( this ).css("color");        
+        var color = $( this ).css("color");
         if (color == "rgb(255, 0, 0)") {
-            $(this).css("color", "black");           
+            $(this).css("color", "black");
         }
         if (color == "rgb(51, 51, 51)") {
-            $(this).css("color", "blue");        
-        }       
+            $(this).css("color", "blue");
+        }
         var closestLi = $(this).closest("li");
         GetNoteInfo(closestLi, "repostClick");
     });
-   
+
     $(document).on("click", ".glyphicon.glyphicon-search", function () {
         var searchText = $("#searchBarInput").val();
         alert(searchText);
     });
-   
-    $(document).on("click", ".clickableContent", function() {               
+
+    $(document).on("click", ".clickableContent", function() {
         var closestLi = $(this).closest("li");
         GetNoteInfo(closestLi, "basicClick");
     });
 
-    $("#closeOverlayBtn").click(function() {
-        PrepOverlay("basic");        
+    $("#closeOverlayBtn").click(function () {
+        PrepOverlay("basic");
         ResetGrid();
-        $(".cards__item").css("width", "33.3333%");       
+        $(".cards__item").css("width", "33.3333%");
     });
 
-    $("#closeRepostOverlayBtn").click(function() {        
+    $("#closeRepostOverlayBtn").click(function () {
         PrepOverlay("repost");
         ResetGrid();
-        $(".cards__item").css("width", "33.3333%");       
-    });
-
-    $("#leftArrow").click(function() {
-        PrepOverlay("clear");
         $(".cards__item").css("width", "33.3333%");
     });
 
@@ -215,10 +239,10 @@
         noteId = noteLi.closest("li").attr("id");
         noteTitle = noteLi.find("input#title").val();
         noteAuthorName = noteLi.find("input#authorName").val();
-        noteAuthorId = noteLi.find("input#author").val(); 
+        noteAuthorId = noteLi.find("input#author").val();                 //original Author ID
         noteDesc = noteLi.find("input#description").val();
-        noteContent = noteLi.find("input#content").val();   
-        noteUploaded = noteLi.find("input#uploaded").val(); 
+        noteContent = noteLi.find("input#content").val();
+        noteUploaded = noteLi.find("input#uploaded").val();
         if (interaction === "basicClick") {
             AddOverlay(noteId, noteTitle, noteAuthorName , noteDesc, noteContent);
         }
@@ -229,17 +253,17 @@
 
     function AddOverlay(noteId, noteTitle, noteAuthor, noteDesc, noteContent) {
         PrepOverlay("basic");
-        GeneralOverlaySettings("basic");      
+        GeneralOverlaySettings("basic");
         $(overlayTitle).html(noteTitle);
         $(overlayAuthor).html(noteAuthor);
         $(overlayDescription).html(noteDesc);
         $(overlayContent).html(noteContent);
     }
 
-    function AddRepostOverlay(noteTitle, noteAuthorName, noteAuthorId, noteDesc, noteContent, noteUploaded) { 
+    function AddRepostOverlay(noteTitle, noteAuthorName, noteAuthorId, noteDesc, noteContent, noteUploaded) {
         PrepOverlay("repost");
-        GeneralOverlaySettings("repost");   
-        $("#repostTitle").val("REPOST: " + noteTitle);       
+        GeneralOverlaySettings("repost");
+        $("#repostTitle").val("REPOST: " + noteTitle);
         $("#repostDesc").val(noteDesc);
         $("#repostContent").val(noteContent);
         $("#overlayOAuthor").html("Original Author: " + noteAuthorName);
@@ -248,37 +272,117 @@
 
     function GeneralOverlaySettings(overlay) {
         if (overlay === "basic") {
-            document.getElementById("overlay").style.display = "block";  
+            document.getElementById("overlay").style.display = "block";
             document.getElementById("repostOverlay").style.display = "none";
-        } 
+        }
         if (overlay === "repost") {
-            document.getElementById("repostOverlay").style.display = "block";        
+            document.getElementById("repostOverlay").style.display = "block";
             document.getElementById("overlay").style.display = "none";
-        } 
+        }
         $("#noteSection").addClass("noteOverlayStyling");
         div1.addClass("col-xs-8");
         div2.addClass("col-xs-4");
-        $(".cards__item").css("width", "100%"); 
+        $(".cards__item").css("width", "100%");
     }
 
     function PrepOverlay(overlay) {
         document.getElementById("searchBarContainer").style.display = "none";
-        div2.removeClass("col-xs-12");        
-        if (overlay === "basic") {           
+        div2.removeClass("col-xs-12");
+        if (overlay === "basic") {
             $("#overlay").css("display", "none").delay(1000);
         } else if (overlay === "repost") {
-            $("#repostOverlay").css("display", "none").delay(1000);                
+            $("#repostOverlay").css("display", "none").delay(1000);
         } else {
             $("#repostOverlay").css("display", "none").delay(1000);
             $("#overlay").css("display", "none").delay(1000);
             ResetGrid();
-        }     
+        }
     }
 
     function ResetGrid() {
         div2.addClass("col-xs-12");
         document.getElementById("searchBarContainer").style.display = "block";
     }
+
+    /*TAGS*/
+
+    $("#repostSubmitBtn").click(function () {
+
+        //submit repost here    insert note.Title, note.Description, note.UserId, DateTime.Now, note.Content, note.OriginalAuthor, note.TagList
+        var currentUserId = @Model.UserItem.Id;
+       
+        $(".tags").each(function () {
+            tagStrings += " " + $(this).text();
+        });
+
+        console.log($("#repostTitle").val());
+        console.log($("#repostDesc").val());
+        console.log(currentUserId);
+        console.log($("#repostContent").val());        
+        console.log(noteAuthorId);
+        console.log(tagStrings);        
+ 
+         var ajaxNote = {
+             NoteId : "",
+             UserId: currentUserId,
+             OriginalAuthor: noteAuthorId,
+             Title : $("#repostTitle").val(),
+             Description  : $("#repostDesc").val(),
+             Content: $("#repostContent").val(),
+             Uploaded : "",
+             TagList: tagStrings
+         };
+   
+        var repostObj = { "note": ajaxNote };
+        var ajaxRepost = JSON.stringify(repostObj);
+ 
+        $.ajax({
+            type: "POST",
+            url: "/Notes/Create",
+            data: ajaxRepost,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        });     
+
+        console.log(ajaxRepost);    
+    });
+
+    function existingTag(text) {
+        var existing = false,
+            text = text.toLowerCase();
+
+        $(".tags").each(function () {
+            if ($(this).text().toLowerCase() == text) {
+                existing = true;
+                return "";
+            }
+        });
+        return existing;
+    }
+
+    $(function () {
+        $(".tags-new input").focus();
+        $(".tags-new input").keyup(function () {
+            var tag = $(this).val().trim(),
+                length = tag.length;
+
+            if ((tag.charAt(length - 1) == ',') && (tag != ",")) {
+                tag = tag.substring(0, length - 1);
+
+                if (!existingTag(tag)) {
+                    $('<li class="tags"><span>' + tag + '</span><i class="fa fa-times"></i></i></li>').insertBefore($(".tags-new"));
+                    $(this).val("");
+                }
+                else {
+                    $(this).val(tag);
+                }
+            }
+        });
+
+        $(document).on("click", ".tags i", function () {
+            $(this).parent("li").remove();
+        });
+    });
 
 </script>
    
