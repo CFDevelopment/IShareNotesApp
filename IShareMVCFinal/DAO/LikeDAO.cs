@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using IShareMVCFinal.DB;
-
+using IShareMVCFinal.Models.ViewModels;
 
 namespace IShareMVCFinal.DAO
 {
@@ -47,17 +47,29 @@ namespace IShareMVCFinal.DAO
             db.ExecuteSql(sql);
         }
 
-        public static List<int> GetLikedPostsByUser(int id)
+        public static List<NoteViewModel> GetLikedPostsByUser(int id)
         {
-            var list = new List<int>();
+            var list = new List<NoteViewModel>();
             var db = MyDB.GetInstance();
             var sql = String.Format("SELECT noteId FROM Likes WHERE userId = '{0}'", id);
             var results = db.ExecuteSelectSql(sql);
             
             while (results.Read())
             {
-                var noteIdString = (int)results["noteId"];                
-                list.Add(noteIdString);
+                var likedNotes = new NoteViewModel
+                {
+                    NoteId = (int)results["noteId"],
+                    UserId = (int)results["userId"],
+                    UserName = results["userName"].ToString(),
+                    Title = results["noteTitle"].ToString(),
+                    Description = results["noteDescription"].ToString(),
+                    Content = results["noteContent"].ToString(),
+                    Uploaded = (DateTime)results["uploaded"],
+                    OriginalAuthor = (int)results["originalAuthor"],
+                    TagList = results["tagList"].ToString()
+                };
+
+                list.Add(likedNotes);
             }
             return list;
         }

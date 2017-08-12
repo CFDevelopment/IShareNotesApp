@@ -1,47 +1,19 @@
-﻿@using IShareMVCFinal.DAO
-@model IShareMVCFinal.Models.ViewModels.LikeViewModel
-  
+﻿
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "ParseNews";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-<div id="overlay">
-    <button type="button" class="btn btn-default" id="closeOverlayBtn">
-        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-    </button>
-    <div id="overlayNoteItem">
-        <div class="tsarB noteTitle"></div>
-        <div class="tsarR noteAuthor"></div>
-        <div class="robo noteDescription"></div>
-        <div id="contentHr"> <hr style="height: 5px; width: 30%; color: black; font-Weight: bold; margin-left: 0;"/>
-        </div>
-        <div class="robo noteContent"></div>
-    </div>
-    <div id="floatOverlayIcons">
-        <button type="button" id="olayLikeBtn" class="noteButtons btn btn-default">
-            <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-        </button>
-        <button type="button" id="olayRepostBtn" class="noteButtons btn btn-default">
-            <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
-        </button>
-        <button type="button" id="olayRemoveBtn" class="noteButtons btn btn-default">
-            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-        </button>
-    </div>
-</div>
 
 <div id="repostOverlay">
     <button type="button" class="btn btn-default" id="closeRepostOverlayBtn">
         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
     </button>
-     
+
     <div id="repostFormDiv">
-                
-        <h2 class="tsarB" id="overlayOAuthor"></h2> 
+
+        <h2 class="tsarB" id="overlayOAuthor"></h2>
         <h3 class="tsarB" id="overlayUpload"></h3>
 
-             
         <div class="form-group">
             <label for="example-color-input" class="col-2 col-form-label">Title</label>
             <div class="col-10">
@@ -60,7 +32,7 @@
                 <textarea class="form-control robo" rows="5" value="" id="repostContent" style="width: 80%;"> </textarea>
             </div>
         </div>
-                              
+
         <div id="repostWrapper">
             <p>Add a tag "," to enter :)</p>
             <ul class="tags-input">
@@ -69,15 +41,40 @@
                 </li>
             </ul>
         </div>
-                
+
         <button type="button" class="btn btn-default" id="repostSubmitBtn"> Repost </button>
-    </div>      
+    </div>
 </div>
 
-<div id="searchBarContainer"> 
+<div id="searchBarContainer">
     <div class="row">
-        <div class="col-md-12">               
+
+        <div class="col-md-1">
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="apiListBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Select Api
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu apiChoice" aria-labelledby="apiListBtn" id="apiList">
+                    <li><a id="techCrunch">Tech Crunch</a></li>
+                    <li><a id="buzzfeed">Buzzfeed</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a id="bbc">BBC News</a></li>
+                    <li><a id="bloomberg">Bloomberg</a></li>                    
+                    <li><a id="cnn">CNN</a></li>
+                    <li><a id="insider">Business Insider</a></li>
+                    <li><a id="dailyMail">Daily Mail</a></li>
+                    <li><a id="espn">ESPN</a></li>
+                    <li><a id="google">Google News</a></li>
+                    <li><a id="mashable">Mashable</a></li>
+                    <li><a id="independent">Independent</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-11">
             <div id="custom-search-input">
+
                 <div class="input-group col-md-12">
                     <input type="text" id="searchBarInput" class="form-control" />
                     <span class="input-group-btn">
@@ -89,79 +86,118 @@
             </div>
         </div>
     </div>
-</div>
 
-<div class="row">
-    <div id="div1"></div>
-    <!-- Note Content -->
-    <div id="div2" class="col-xs-12">        
-        <div id="noteSection">
-            <ul class="cards">                
-                @foreach (var note in @Model.NoteList)
-                {
-                    <li class="cards__item" id= "@note.NoteId">
-                        <div class="card">
-                            <div class="card__content">
-                    
-                                <div class="clickableContent">
-                                    <div class="card__title"> @note.Title</div>
-                                    <div class="card__title"> @note.UserName</div>
-                                    <p class="card__text"> @note.Description</p>
-                                </div>
-                                
-                                <input type="hidden" id ="title" value="@note.Title" />
-                                <input type="hidden" id ="author" value= "@note.UserId" />
-                                <input type="hidden" id="authorName" value="@note.UserName" />
-                                <input type="hidden" id ="description" value="@note.Description" />
-                                <input type="hidden" id ="content" value="@note.Content" />
-                                <input type="hidden" id="uploaded" value="@note.Uploaded.Date" />
-                                
-                                <div class="row" id="buttonRow">
-                                    <button type="button" class="noteButtons likedPost btn btn-default">                                     
-                                        <span class="glyphicon glyphicon-heart" id=@string.Format("like{0}", note.NoteId) aria-hidden="true"></span>
-                                    </button>
 
-                                    @if (Model.LikedList.Count != 0)
-                                    {
-                                        foreach (var likedItem in Model.LikedList)
-                                        {                                           
-                                            if (likedItem.NoteId == note.NoteId)
-                                            {
-                                                <script type="text/javascript">
-                                                   // alert("found like");
-                                                    var tagID =@string.Format("like{0}", note.NoteId)
-                                                        console.log(tagID);
-                                                    $(tagID).css("color", "red");
-                                                    //el.style.color = "red";
-                                                </script>
-                                            }
-                                           
-                                        }
-                                    }
-                                     
-                                    
-
-                                    <button type="button" class="noteButtons btn btn-default">
-                                        <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
-                                    </button>
-                                    <button type="button" class="noteButtons btn btn-default">
-                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                    </button>                                                                                                       
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                }
-            </ul>
+    <div class="row">
+        <div id="div1"></div>
+        <!-- Note Content -->
+        <div id="div2" class="col-md-12">
+            <div><h2 class="tsarB" id="sourceh2"> </h2></div>
+            <div id="noteSection">
+                <ul class="cards" id="articleTarget">                  
+                </ul>
+            </div>
         </div>
     </div>
+
 </div>
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 
 <script type="text/javascript">
+    $(".navItems").removeClass("hidden");
+    /**
+    AJAX call to create author => user to get user id to upload the note
+    */
+    
+    $(".cards > a").click(function () {
+      
+        var aID = $(this).attr("id");
+        
+        switch (aID) {
+            case "techCrunch": getJson("techcrunch"); break;
+            case "buzzfeed": getJson("buzzfeed"); break;           
+            case "bbc": getJson("bbc-news"); break;
+            case "cnn": getJson("cnn"); break;
+            case "bloomberg": getJson("bloomberg"); break;
+            case "insider": getJson("business-insider"); break;
+            case "dailyMail": getJson("daily-mail"); break;
+            case "espn": getJson("espn"); break;
+            case "google": getJson("google-news"); break;
+            case "mashable": getJson("mashable"); break;
+            case "independent": getJson("independent"); break;                
+        }   
 
-   $(".navItems").removeClass("hidden");
+        $("#articleTarget").children().empty();       
+    });
+    
+    var articleList = new Array();
+    var article;
+    var articleId = 0;
+
+    function Article(aId, source, author, title, description, url) {
+        this.aId = aId;
+        this.source = source;
+        this.author = author;
+        this.title = title;
+        this.description = description;
+        this.url = url;
+    }
+
+    function getJson(newsSource) {
+        $.ajax({
+            type: 'GET',
+            url: 'https://newsapi.org/v1/articles?source=' + newsSource + '&apiKey=fd39537e496a499189011751864344ed',
+            dataType: 'json',
+            success: parseNews
+        });
+    }
+
+    /*Default get techcrunch */
+   $.ajax({
+        type: 'GET',
+        url: 'https://newsapi.org/v1/articles?source=' + "techcrunch" + '&apiKey=fd39537e496a499189011751864344ed',
+        dataType: 'json',
+        success: parseNews
+    });
+   
+    function parseNews(data) {        
+        var newsSource = data.source;
+        $("#sourceh2").html(newsSource).css("padding-left", "1%");
+        var start = data.articles;
+        for (var i = 0; i < start.length; i++) {
+            article = new Article(articleId, newsSource, start[i].author, start[i].title, start[i].description, start[i].url);
+            articleList.push(article);
+            addArticleToUi(article);
+            ++articleId;
+        }      
+    }
+
+    function addArticleToUi(article) {
+        var targetUl = $("#articleTarget");
+        var aLi = $("<li></li>").attr("class", "cards_item").attr("id", article.aId);
+        $(targetUl).append(aLi);
+        var cardDiv = $("<div></div>").attr("class", "newsCard");
+        var cardContentDiv = $("<div></div>").attr("class", "card_content_news").css("padding-left", "20px" );
+        var clickableDiv = $("<div></div>").attr("class", "infoContainer").css("padding-left", "10px").css("padding-left", "10px");
+        var cardTitle = $("<div></div>").attr("class", "card_title tsarB").html(article.title).css("padding-top", "17px");
+        var cardSource = $("<div></div>").attr("class", "card_title tsarR").html(article.source);
+        var cardDesc = $("<div></div>").attr("class", "card_text robo").html(article.description).css("padding-bottom", "10px");
+        var cardUrl = $("<a></a>").attr("class", "card_text robo").attr("href", article.url).html("View Article").css("padding-top", "10px");
+        $(clickableDiv).append(cardTitle, cardSource, cardDesc, cardUrl );        
+        var buttonGroup = $("<div></div>").attr("class", "row").css("margin-top", "10px").css("padding-left", "2%").css("width", "400px");
+        var cardRepostBtn = $("<button></button>").attr("class", "noteButtons btn btn-default").attr("id", "retweet" + article.aId);
+        var repostSpan = $("<span> </span>").attr("class", "glyphicon glyphicon-retweet").attr("aria-hidden", "true").css("width", "20px");
+        var cardDeleteBtn = $("<button></button>").attr("class", "noteButtons btn btn-default").attr("id", "remove" + article.aId);
+        var deleteSpan = $("<span> </span>").attr("class", "glyphicon glyphicon-remove").attr("aria-hidden", "true").css("width", "20px");
+        $(cardRepostBtn).append(repostSpan);
+        $(cardDeleteBtn).append(deleteSpan);
+        $(buttonGroup).append(cardRepostBtn, cardDeleteBtn);        
+        $(cardContentDiv).append(clickableDiv, buttonGroup, "<hr />");
+        $(cardDiv).append(cardContentDiv);
+        $(aLi).append(cardDiv);       
+    }
+    
     var noteId, noteTitle, noteAuthorId, noteAuthorName, noteDesc, noteContent, noteUploaded;
     var div1 = $("#div1");
     var div2 = $("#div2");
@@ -170,31 +206,6 @@
     var overlayDescription = $(".noteDescription");
     var overlayContent = $(".noteContent");
     var tagStrings = "";
-
-    $(document).on("click", ".glyphicon.glyphicon-heart", function() {
-        noteId = $(this).closest("li").attr("id");
-        var color = $( this ).css("color");
-        if (color == "rgb(255, 0, 0)") {
-            $(this).css("color", "rgb(51, 51, 51)");
-        }
-        if (color == "rgb(51, 51, 51)") {
-            $(this).css("color", "rgb(255, 0, 0)");
-        }
-        var like = {
-            UserId: @Model.UserItem.Id,
-            NoteId: noteId
-        };
-        //var likeObj = { "like": like };
-        var ajaxLike = JSON.stringify(like);
-        $.ajax({
-            type: "POST",
-            url: "/Like/Add",
-            data: ajaxLike,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json"
-        });
-        console.log(ajaxLike);
-    });
 
     $(document).on("click", ".glyphicon.glyphicon-retweet", function() {
         noteId = $(this).closest("li").attr("id");
@@ -205,8 +216,7 @@
         if (color == "rgb(51, 51, 51)") {
             $(this).css("color", "blue");
         }
-        var closestLi = $(this).closest("li");
-        GetNoteInfo(closestLi, "repostClick");
+        var closestLi = $(this).closest("li");      
     });
 
     $(document).on("click", ".glyphicon.glyphicon-search", function () {
@@ -214,10 +224,6 @@
         alert(searchText);
     });
 
-    $(document).on("click", ".clickableContent", function() {
-        var closestLi = $(this).closest("li");
-        GetNoteInfo(closestLi, "basicClick");
-    });
 
     $("#closeOverlayBtn").click(function () {
         PrepOverlay("basic");
@@ -303,17 +309,21 @@
     /*TAGS*/
 
     $("#repostSubmitBtn").click(function () {
-        var currentUserId = @Model.UserItem.Id;       
-        $(".tags").each(function () {
+
+        //submit repost here    insert note.Title, note.Description, note.UserId, DateTime.Now, note.Content, note.OriginalAuthor, note.TagList
+      
+
+        /*$(".tags").each(function () {
             tagStrings += " " + $(this).text();
         });
+
         console.log($("#repostTitle").val());
         console.log($("#repostDesc").val());
         console.log(currentUserId);
-        console.log($("#repostContent").val());        
+        console.log($("#repostContent").val());
         console.log(noteAuthorId);
-        console.log(tagStrings);        
- 
+        console.log(tagStrings);
+
          var ajaxNote = {
              NoteId : "",
              UserId: currentUserId,
@@ -324,19 +334,19 @@
              Uploaded : "",
              TagList: tagStrings
          };
-   
+
         var repostObj = { "note": ajaxNote };
         var ajaxRepost = JSON.stringify(repostObj);
- 
+
         $.ajax({
             type: "POST",
             url: "/Notes/Create",
             data: ajaxRepost,
             contentType: "application/json; charset=utf-8",
             dataType: "json"
-        });     
+        });
 
-        console.log(ajaxRepost);    
+        console.log(ajaxRepost);*/
     });
 
     function existingTag(text) {
@@ -377,4 +387,9 @@
     });
 
 </script>
-   
+
+
+
+
+
+

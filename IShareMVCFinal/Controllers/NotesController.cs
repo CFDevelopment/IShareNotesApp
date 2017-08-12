@@ -46,7 +46,7 @@ namespace IShareMVCFinal.Controllers
                 string[] tags = tagList.Split(delimiter);
 
                foreach (var tag in tags)
-                {
+                {                    
                     if(tag != null || tag != "")
                     {
                         var t = new Tag
@@ -54,10 +54,15 @@ namespace IShareMVCFinal.Controllers
                             Name = tag
                         };
                         TagDAO.Create(t);
-                    }                 
+                    }
+                    
+                    var tagItem = TagDAO.GetTag(tag);
+                    var nTag = new Note_Tag();
+                    nTag.NoteId = note.NoteId;
+                    nTag.TagId = tagItem.Id;                    
+                    Note_TagDAO.Create(nTag);
                 }
-                
-                //return JavaScript("window.location = '" + Url.Action("Index", "Home") + "'");
+               
                return RedirectToAction("Index", "Home");             
             }
             catch

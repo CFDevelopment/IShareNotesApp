@@ -1,9 +1,21 @@
-﻿/*body {
+﻿
+
+#articleTarget {
+    /*margin: 0 auto;*/
+    width: 100%;
+}
+
+#articleTitle {
+    padding-left: 20px;
+}
+
+
+
+
+/*body {
     padding-top: 50px;
     padding-bottom: 20px;
 }*/
-
-
 /*NAV BAR
 
 .navbar-custom {
@@ -102,8 +114,6 @@
 }
 */
 /*End Nav*/
-
-
 .postLiked {
     color: red;
 } 
@@ -126,8 +136,6 @@ html, body, main {
     white-space: normal;
 }
 
-
-
 /*Home LOGIN Page*/
 
 #mainBackOverlay {
@@ -142,13 +150,6 @@ html, body, main {
     background-color: #28343d; /* Black background with opacity */
     /*z-index: 2;  Specify a stack order in case you're using a different order for other elements */    
 }
-
-
-
-
-
-
-/* Set width on the form input elements since they're 100% wide by default */
 
 
 * { box-sizing:border-box; }
@@ -174,7 +175,6 @@ html, body, main {
     background:#FFF;
     padding:10px 50px 50px;
 }
-
 
 /*tags*/
 
@@ -371,6 +371,7 @@ body {
     }
 }
 
+
 .card {
     background-color: white;
     border-radius: 0.25rem;
@@ -383,6 +384,20 @@ body {
     overflow: hidden;
     width: 700px;
 }
+
+.newsCard {
+    background-color: white;
+    border-radius: 0.25rem;
+    box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    overflow: hidden;
+    width: 1100px;
+}
+
 
 .card:hover{
     -webkit-filter: contrast(100%);
@@ -405,13 +420,30 @@ body {
     margin-top: 3px;  
 }
 
+.card__content_news {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    padding: 1rem;    
+    width: 100%;
+    margin-top: 15px;
+}
+
+
+
 .card__title {
     color: #696969;
     font-size: 1.25rem;
     font-weight: 300;
     letter-spacing: 2px;
-    text-transform: uppercase;
-    
+    text-transform: uppercase; 
 }
 
 .card__text {
@@ -466,14 +498,14 @@ body {
     display: none; /* Hidden by default */
     width: 60%; /* Full width (cover the whole page) */
     height: 100%; /* Full height (cover the whole page) */
-    top: 0; 
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background-color: white; /* Black background with opacity */
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
     cursor: pointer; /* Add a pointer on hover */
-    border-right: black inset 3px;
+    /*border-right: grey inset 3px;*/
 }
 
 #repostOverlay {
@@ -481,14 +513,14 @@ body {
     display: none; /* Hidden by default */
     width: 60%; /* Full width (cover the whole page) */
     height: 100%; /* Full height (cover the whole page) */
-    top: 0; 
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background-color: white; /* Black background with opacity */
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
     cursor: pointer; /* Add a pointer on hover */
-    border-right: black inset 3px;
+    /*border-right: black inset 3px;*/
 }
 
 #whiteOverlay {

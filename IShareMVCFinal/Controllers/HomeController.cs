@@ -27,31 +27,33 @@ namespace IShareMVCFinal.Controllers
                 userId = cookieId.Value;
                 var user = UserDAO.GetUser(int.Parse(userId));
                 var noteList = NoteDAO.GetNotes();
-                var likedList = LikeDAO.GetLikedPostsByUser(user.Id);
-                //  list of items they have reposted        
-                //  list of items they have posted
+                var likedList = NoteDAO.GetLikedPosts(user.Id);
+                var repostedist = NoteDAO.GetRepostedNotes(user.Id);
+                var originalPosts = NoteDAO.GetOriginalPosts(user.Id);             
                 //  list of items they have not deleted to populate
                 var like = new Like();
                 var author = new User();
                 var repost = new Note();
-
-                //note list should be the ones they dont delete
-                //select * notes where user like them
-                //return the note id, list of id
-
+                
                 var likeItem = new LikeViewModel
                 {
                     UserItem = user,
-                    NoteList = noteList,
-                    LikedList = likedList,
                     Author = author,
-                    LikedItem = like,
-                    Repost = repost
+                    LikedItem = like, //should be list of Like 
+                    Repost = repost,
+                    NoteList = noteList,
+                    LikedList = likedList,                   
+                    RepostedNotes = repostedist,
+                    OriginalNotes = originalPosts
                 };
                             
                 return View(likeItem);
             }
+            return View();
+        }
 
+        public ActionResult ParseNews()
+        {
             return View();
         }
 

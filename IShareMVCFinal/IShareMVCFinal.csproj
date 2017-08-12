@@ -235,8 +235,10 @@
     <Compile Include="Models\Tables\Note_Tag.cs" />
     <Compile Include="Models\Tables\Tag.cs" />
     <Compile Include="Models\Tables\User.cs" />
+    <Compile Include="Models\ViewModels\AccountViewModel.cs" />
     <Compile Include="Models\ViewModels\CreateNoteUserModelView.cs" />
     <Compile Include="Models\ViewModels\LikeViewModel.cs" />
+    <Compile Include="Models\ViewModels\NoteUserViewModel.cs" />
     <Compile Include="Models\ViewModels\NoteViewModel.cs" />
     <Compile Include="Models\ViewModels\TagNoteViewModel.cs" />
     <Compile Include="Models\ViewModels\TagViewModel.cs" />
@@ -322,6 +324,7 @@
     <Content Include="TSTAR-TW-PRO-Regular-1.ttf" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Users\Account.cshtml" />
+    <Content Include="Views\Home\ParseNews.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

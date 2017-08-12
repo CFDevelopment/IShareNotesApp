@@ -36,7 +36,23 @@ namespace IShareMVCFinal.DAO
             return false; //return false if no tag matches in database
         }
 
-        //return list of notes where tagName
-       
+        public static Tag GetTag(string tag)
+        {
+            var db = MyDB.GetInstance();
+            var sql =
+                string.Format("SELECT * FROM Tags WHERE tagName = {0}", tag);
+            var results = db.ExecuteSelectSql(sql);
+            if (results.HasRows)
+            {
+                results.Read();
+                return new Tag
+                {                    
+                    Id= (int)results["tagId"],
+                    Name = results["tagName"].ToString()                    
+                };
+            }
+            return null;
+        }
+
     }
 }

@@ -31,7 +31,10 @@ GO
 USE [IShare]
 GO
 
-/****** Object:  Table [dbo].[Notes]    Script Date: 2017-08-05 12:32:43 PM ******/
+USE [IShare]
+GO
+
+/****** Object:  Table [dbo].[Notes]    Script Date: 2017-08-12 1:43:48 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -46,6 +49,7 @@ CREATE TABLE [dbo].[Notes](
 	[uploaded] [datetime] NOT NULL,
 	[noteContent] [nvarchar](max) NOT NULL,
 	[originalAuthor] [int] NULL,
+	[tagList] [nvarchar](max) NULL,
  CONSTRAINT [PK_Notes] PRIMARY KEY CLUSTERED 
 (
 	[noteId] ASC
@@ -61,29 +65,7 @@ GO
 ALTER TABLE [dbo].[Notes] CHECK CONSTRAINT [FK_Notes_Notes]
 GO
 
-USE [IShare]
-GO
 
-/****** Object:  Table [dbo].[Tags]    Script Date: 2017-08-05 12:33:26 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE TABLE [dbo].[Tags](
-	[tagId] [int] IDENTITY(1,1) NOT NULL,
-	[tagName] [nvarchar](50) NOT NULL,
- CONSTRAINT [PK_Tags] PRIMARY KEY CLUSTERED 
-(
-	[tagId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-
-USE [IShare]
-GO
 
 /****** Object:  Table [dbo].[Notes_Tags]    Script Date: 2017-08-05 12:33:38 PM ******/
 SET ANSI_NULLS ON

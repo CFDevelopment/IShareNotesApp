@@ -55,8 +55,12 @@
 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Add Note", "Create", "Notes")</li>
+                    <li class="hidden navItems">@Html.ActionLink("News", "ParseNews", "Home")</li>
+                    <li class="hidden navItems">@Html.ActionLink("Add Note", "Create", "Notes")</li>
+                    <li class="hidden navItems">@Html.ActionLink("My Account", "Account", "Users")</li>   
+                    <li class="hidden navItems">USER ACCOUNTS</li>   
                 </ul>
+
             </div>
 
         </div>

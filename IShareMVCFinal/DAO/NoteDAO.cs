@@ -78,11 +78,11 @@ namespace IShareMVCFinal.DAO
             return list;
         }
 
-        public static List<NoteViewModel> GetRepostedNotes()
+        public static List<NoteViewModel> GetRepostedNotes(int id)
         {
             var list = new List<NoteViewModel>();
             var db = MyDB.GetInstance();
-            var sql = string.Format("select * from Notes n join Users u ON n.userId = u.userId");
+            var sql = string.Format("SELECT * FROM Notes n JOIN Users u ON n.userId = u.userId WHERE n.userId = '{0}' AND n.userId != '{1}'", id, id);
 
             var results = db.ExecuteSelectSql(sql);
 
@@ -105,11 +105,11 @@ namespace IShareMVCFinal.DAO
             return list;
         }
 
-        public static List<NoteViewModel> GetOriginalPosts()
+        public static List<NoteViewModel> GetOriginalPosts(int id)
         {
             var list = new List<NoteViewModel>();
             var db = MyDB.GetInstance();
-            var sql = string.Format("select * from Notes n join Users u ON n.userId = u.userId");
+            var sql = string.Format("select * from Notes n join Users u ON n.userId = u.userId WHERE n.userId = '{0}' AND n.userId = '{1}'", id, id);
 
             var results = db.ExecuteSelectSql(sql);
 
@@ -131,6 +131,34 @@ namespace IShareMVCFinal.DAO
             }
             return list;
         }
+
+        public static List<NoteViewModel> GetLikedPosts(int id)
+        {
+            var list = new List<NoteViewModel>();
+            var db = MyDB.GetInstance();
+            var sql = string.Format("select * from Notes n join Likes l on n.noteId = l.noteId join Users u on u.userId = n.userId where l.userId = '{0}'", id);
+
+            var results = db.ExecuteSelectSql(sql);
+
+            while (results.Read())
+            {
+                var noteViewModel = new NoteViewModel
+                {
+                    NoteId = (int)results["noteId"],
+                    UserId = (int)results["userId"],
+                    UserName = results["userName"].ToString(),
+                    Title = results["noteTitle"].ToString(),
+                    Description = results["noteDescription"].ToString(),
+                    Content = results["noteContent"].ToString(),
+                    Uploaded = (DateTime)results["uploaded"],
+                    OriginalAuthor = (int)results["originalAuthor"],
+                    TagList = results["tagList"].ToString()
+                };
+                list.Add(noteViewModel);
+            }
+            return list;
+        }
+
 
     }
 }
