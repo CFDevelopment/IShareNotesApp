@@ -12,6 +12,27 @@ namespace IShareMVCFinal.Controllers
     public class HomeController : Controller
     {
 
+        public ActionResult LoginValidate(string UserName, string Password)
+        {
+            var user = UserDAO.GetUser(UserName, Password);
+            var usernameExist = UserDAO.UsernameExists(UserName);
+
+            if (user != null) //username and psss are correct, login success
+            {
+                var cookie = new HttpCookie("UserID", user.Id.ToString());
+                Response.AppendCookie(cookie);
+            }
+
+            if (usernameExist) //passwod wrong, go to login page retry.
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            // username does not exist, ask user to sign up.
+            return RedirectToAction("Register", "Users");
+        }
+
+
         public ActionResult Login()
         {
             return View();
@@ -20,6 +41,12 @@ namespace IShareMVCFinal.Controllers
         public ActionResult Index()
         {
             var cookieId = Request.Cookies["userId"];
+            if (cookieId == null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
+
+
             string userId = "";
 
             if (cookieId != null)
@@ -49,12 +76,22 @@ namespace IShareMVCFinal.Controllers
                             
                 return View(likeItem);
             }
-            return View();
+            return RedirectToAction("Login","Users");
         }
 
         public ActionResult ParseNews()
         {
             return View();
+        }
+
+
+        public ActionResult LogOut()
+        {
+            HttpCookie cookie = ControllerContext.HttpContext.Request.Cookies["userId"];
+            cookie.Expires = DateTime.Now.AddDays(-1);
+            ControllerContext.HttpContext.Response.Cookies.Add(cookie);
+
+            return RedirectToAction("Login", "Users");
         }
 
     }

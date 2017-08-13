@@ -20,6 +20,7 @@ namespace IShareMVCFinal.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult Register(User user)
         {
@@ -61,10 +62,40 @@ namespace IShareMVCFinal.Controllers
                 };
 
                 return View(accountViewItem);
-            }   
+            } 
+              
             return View();
-        }  
-        
+        }
+
+
+        public ActionResult AllUsers()
+        {
+            var users = UserDAO.GetUsers();
+            return View(users);
+        }
+
+
+        public ActionResult UserAccount(int id)
+        {
+            if (id != 0)
+            {
+                var user = UserDAO.GetUser(id);
+                var likedList = NoteDAO.GetLikedPosts(user.Id);
+                var repostedist = NoteDAO.GetRepostedNotes(user.Id);
+                var originalPosts = NoteDAO.GetOriginalPosts(user.Id);
+
+                var accountViewItem = new AccountViewModel
+                {
+                    LikedNotes = likedList,
+                    RepostedNotes = repostedist,
+                    OriginalNotes = originalPosts
+                };
+
+                return View(accountViewItem);
+            }
+
+            return View();
+        }
 
 
 

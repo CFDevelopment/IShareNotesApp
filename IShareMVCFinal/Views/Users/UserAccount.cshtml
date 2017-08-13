@@ -1,0 +1,118 @@
+﻿@model IShareMVCFinal.Models.ViewModels.AccountViewModel
+
+@{
+    ViewBag.Title = "Account";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hr />
+<hr/>
+<hr/>
+
+<div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">User Likes</a></li>
+        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">User Posts</a></li>
+        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">User Reposts</a></li>       
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">  
+        
+        <div role="tabpanel" class="tab-pane active" id="home">
+
+
+            @if (Model.LikedNotes.Count != 0)
+            {
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Uploaded</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var liked in Model.LikedNotes)
+                    {
+                        <tr>
+                            <td> @liked.Title</td>
+                            <td> @liked.UserName</td>
+                            <td> @liked.Uploaded</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h5>This user didn't like anything..</h5>
+            }
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="profile">
+
+            @if (Model.OriginalNotes.Count != 0)
+            {
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Uploaded</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var original in Model.OriginalNotes)
+                    {
+                        <tr>
+                            <td> @original.Title</td>
+                            <td> @original.UserName</td>
+                            <td> @original.Uploaded</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h5>This user has not Created any notes :( </h5>
+            }
+
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="messages">
+
+            @if (Model.RepostedNotes.Count != 0)
+            {
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Uploaded</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var reposted in Model.RepostedNotes)
+                    {
+                        <tr>
+                            <td> @reposted.Title</td>
+                            <td> @reposted.UserName</td>
+                            <td> @reposted.Uploaded</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }else
+            {
+                <h5>This User have not reposted any notes :( </h5>
+            }
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(".navItems").removeClass("hidden");
+</script>
